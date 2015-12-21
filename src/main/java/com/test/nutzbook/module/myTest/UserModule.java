@@ -43,6 +43,7 @@ public class UserModule {
 
     @At("/test")
     public int count(){
+
         return dao.count(User.class);
     }
 
