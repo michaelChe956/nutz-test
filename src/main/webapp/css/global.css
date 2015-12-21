@@ -1,0 +1,389 @@
+
+/**全局样式**/
+*{font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:normal;color:#333;line-height:1.6em;margin:0;padding:0;list-style:none;text-decoration:none;}
+img{border:0;}
+html {overflow-y:scroll;}
+body {margin:0; font:12px "\5B8B\4F53",sans-serif;background:#ffffff;}
+textarea{resize:none;}
+img{vertical-align:top;border:0;}
+em {font-style:normal;}
+.left{float:left;}
+/* link css */
+a {color:#333333; text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {color:#ba2636;text-decoration:underline;}
+a:active {color:#ba2636;}
+.sub-list a,.sub-list a:visited {color:#585858;}
+.cDGray,.cDGray:visited,.cDGray a{color:#727171;}
+.cBlue,.cBlue:visited,.cBlue a{color:#36c;}
+.cBlue:hover{color:#36c;}
+.cDRed,.cDRed:visited,.cDRed a{color:#ba2636;}
+.cRed {color:#ff0000;}
+.cDarkRed{color:#c00;}
+a.cDarkRed{text-decoration:none;}
+a.cDarkRed:hover{text-decoration:underline;}
+.cOrange{color:#f60;}
+.cGray{color:Gray;}
+a.cGray{color:Gray;}
+a.cGray:visited,a.cGray:hover,a.cGray:active{color:Gray;text-decoration:none;}
+.fontWeight{font-weight:600;}
+.clearfix{zoom:1;}
+.clearfix:after{clear:both;content:'.';display:block;visibility:hidden;height:0;}
+.width980{width:980px;margin:0 auto;}
+.center{width:980px;margin:0 auto;}
+.divide{background-color:#F2F2F2;width:980px;margin:0 auto;height:3px;}
+.loginLogo{margin-bottom:10px;}
+
+
+a.fontC36cS12B:link,a.fontC36cS12B:visited{font-size:12px;color:#36c;text-decoration:none;font-weight:600;}
+a.fontC36cS12B:hover{text-decoration:underline;}
+a.fontC36cS12B:active{color:#36c;}
+
+a.fontC36cS12:link,a.fontC36cS12:visited{font-size:12px;color:#36c;text-decoration:none;}
+a.fontC36cS12:hover{text-decoration:underline;}
+a.fontC36cS12:active{color:#36c;}
+
+a.fontC36cS13:link,a.fontC36cS13:visited{font-size:12px;color:#36c;text-decoration:none;}
+a.fontC36cS13:hover{color:red;}
+/**全局样式 End**/
+
+/**topBar**/
+.topBar {background:url(../images/order_query/topBarBc.gif) repeat-x;border:1px solid #dfdfdf;border-bottom:0;height:30px;line-height:30px;}
+.topBar span {float:left;line-height:30px;padding-left:11px;}
+.topBar span a {line-height:30px;text-decoration:underline;}
+.topBar .help{float:right;padding-left:20px;margin-right:10px;line-height:30px;background:url(../images/order_query/question.gif) 0 7px no-repeat;}
+/**logo**/
+.logo {margin-bottom:10px;}
+
+/**步骤图**/
+.orderStatus{position:relative;height:150px;padding-top:20px;background:url(../images/pageHeaderLine.gif) top repeat-x;}
+.stepCompleteLine{position:absolute;top:70px;z-index:999;width:100%;overflow:hidden;border-top:2px solid #5fb4e6;}
+.stepCompleteLine1{position:absolute;top:70px;z-index:999;width:100%;overflow:hidden;border-top:2px solid #5fb4e6;}
+.stepUnfinishedLine{position:absolute;top:70px;z-index:99;width:100%;border-top:2px solid #e4e4e4;}
+
+#orderStep0 .stepCompleteLine{width:79px;}
+#orderStep1 .stepCompleteLine{width:234px;}
+#orderStep2 .stepCompleteLine{width:407px;}
+#orderStep3 .stepCompleteLine{width:580px;}
+#orderStep4 .stepCompleteLine{width:720px;}
+#orderStep5 .stepCompleteLine{width:880px;}
+#orderStep6 .stepCompleteLine{width:980px;}
+#orderStepNew .stepCompleteLine{width:407px;}
+
+/**空中入网**/
+#orderStep0 .stepCompleteLine1{width:79px;}
+#orderStep1 .stepCompleteLine1{width:234px;}
+#orderStep2 .stepCompleteLine1{width:407px;}
+#orderStep3 .stepCompleteLine1{width:580px;}
+#orderStep4 .stepCompleteLine1{width:720px;}
+#orderStep5 .stepCompleteLine1{width:880px;}
+#orderStep6 .stepCompleteLine1{width:980px;}
+
+.orderStatus span{display:block;position:absolute;top:56px;z-index:9999;color:#999;text-align:center;padding-top:5px;width:28px;height:23px;}
+
+#orderStep0 .step1{left:63px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep0 .step2{left:230px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep0 .step3{left:393px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep0 .step4{left:556px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep0 .step5{left:719px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep0 .step6{left:882px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+
+#orderStep1 .step1{left:74px;background:url(../images/stepImages/stepOn.gif) no-repeat;top:47px;width:48px;height:48px;line-height:48px;padding:0;font-size:16px;color:#fff;}
+#orderStep1 .step2{left:230px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep1 .step3{left:393px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep1 .step4{left:556px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep1 .step5{left:719px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep1 .step6{left:882px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+
+#orderStep2 .step1{left:63px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep2 .step2{left:220px;background:url(../images/stepImages/stepOn.gif) no-repeat;top:47px;width:48px;height:48px;line-height:48px;padding:0;font-size:16px;color:#fff;}
+#orderStep2 .step3{left:393px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep2 .step4{left:556px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep2 .step5{left:719px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep2 .step6{left:882px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+
+#orderStep3 .step1{left:63px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep3 .step2{left:230px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep3 .step3{left:393px;background:url(../images/stepImages/stepOn.gif) no-repeat;top:47px;width:48px;height:48px;line-height:48px;padding:0;font-size:16px;color:#fff;}
+#orderStep3 .step4{left:556px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep3 .step5{left:719px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep3 .step6{left:882px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+
+#orderStep4 .step1{left:63px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep4 .step2{left:230px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep4 .step3{left:393px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep4 .step4{left:546px;background:url(../images/stepImages/stepOn.gif) no-repeat;top:47px;width:48px;height:48px;line-height:48px;padding:0;font-size:16px;color:#fff;}
+#orderStep4 .step5{left:719px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStep4 .step6{left:882px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+
+#orderStep5 .step1{left:63px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep5 .step2{left:230px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep5 .step3{left:393px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep5 .step4{left:556px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep5 .step5{left:719px;background:url(../images/stepImages/stepOn.gif) no-repeat;top:47px;width:48px;height:48px;line-height:48px;padding:0;font-size:16px;color:#fff;}
+#orderStep5 .step6{left:882px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+
+#orderStep6 .step1{left:63px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep6 .step2{left:230px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep6 .step3{left:393px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep6 .step4{left:556px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep6 .step5{left:719px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep6 .step6{left:872px;background:url(../images/stepImages/stepOn.gif) no-repeat;top:47px;width:48px;height:48px;line-height:48px;padding:0;font-size:16px;color:#fff;}
+
+
+#orderStepNew .step1{left:67px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStepNew .step2{left:230px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStepNew .step3{left:383px;background:url(../images/stepImages/stepOn.gif) no-repeat;top:47px;width:48px;height:48px;line-height:48px;padding:0;font-size:16px;color:#fff;}
+#orderStepNew .step4{left:556px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStepNew .step5{left:719px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+#orderStepNew .step6{left:882px;background:url(../images/stepImages/stepUnfinished.gif) no-repeat;}
+
+#orderStep7 .step1{left:63px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep7 .step2{left:230px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep7 .step3{left:393px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep7 .step4{left:556px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep7 .step5{left:719px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+#orderStep7 .step6{left:872px;background:url(../images/stepImages/stepComplete.gif) no-repeat;color:#fff;}
+
+
+.stepExplain{width:163px;overflow:hidden;position:absolute;float:left;margin-top:60px;text-align:center;}
+.stepExplain label{display:block;}
+.position0{left:0;}
+.position163{left:163px;}
+.position326{left:326px;}
+.position489{left:489px;}
+.position652{left:652px;}
+.position815{left:815px;}
+
+/**步骤图 end**/
+/*加载中*/
+.loading {background:#fef8f2;border:1px solid #f0dcca;width:100px;height:20px;padding:10px;}
+.loading  span {float:left;color:#dec7b5;font-weight:bold;}
+.loading i {width:32px;height:32px;display:block;float:left;}
+.contentBtm01{margin-bottom:20px;}
+
+
+/*********分页样式*********/
+.pagingContent{width: 808px;border: 1px solid #e6f0f5;border-bottom: 0;text-align: center;margin-bottom: 10px;}
+.pagingContent  td {padding: 10px 5px;border-bottom: 1px solid #e6f0f5;}
+.tableTitle,.activityPaging{width:808px;height:31px;line-height:31px;margin-bottom:10px;border:#e6f0f5 solid 1px; background:url(../images/order_query/blue_table_bc.gif) repeat-x;}
+.paging{margin-top:5px;display:block; float:right;}
+.paging a{display:block;float:left;height:19px;padding:1px 7px 0px;text-align:center;color:#36c;font-weight:bold;margin-right:5px;background:#fff;border:1px solid #d7d7d7;}
+.paging a:hover{text-decoration:none;background:#f0f9fe;border-color:#7eccf3;}
+.paging label{float:left;margin-right:5px;}
+.paging label.marginTop2px{margin-top:2px;}
+.paging input{display:block;float:left;margin:1px 5px 0 0;}
+.paging a.pagingSelect{background:#39c;color:#fff; font-weight:bold;}
+.paging a.hidingInfor{height:21px;border:0;background:transparent;}
+.totalRecord {float: right;margin: 7px 20px 0px 0;line-height: 20px;}
+/*跳转按钮样式*/
+.paging a.determineBtn{width:39px;height:12px;line-height:12px;text-align:center;padding:5px 0;border:0;font-weight:100;color:#333;background:url(../images/backstageAllButton.png) -329px 0px no-repeat;}
+.paging a.determineBtn:hover{background-position:-329px -23px;}
+/*输入框样式*/
+.inputW20H18{width:20px;height:18px;line-height:18px;}
+/*上一页 默认 滑过 到头样式*/
+.paging a.prevPage{width:53px;height:20px;line-height:20px;padding:1px 0 1px 5px;color:#36c;background:url(../images/backstageAllButton.png) -212px -23px no-repeat;border:0;font-weight:bold;}
+.paging a.prevPage:hover{background-position:-212px -46px;color:#36c;}
+.paging a.prevEnd{background-position:-212px 0px;color:#999;}
+/*下一页 默认 滑过 到头样式*/
+.paging a.nextPage{width:53px;height:20px;line-height:20px;padding:1px 5px 1px 0;color:#36c;background:url(../images/backstageAllButton.png) -270px -23px no-repeat;border:0;font-weight:bold;}
+.paging a.nextPage:hover{background-position:-270px -46px;color:#36c;}
+.paging a.nextEnd{background-position:-270px 0px;color:#999;}
+/*********分页样式 end*********/
+
+/*********新分页样式*********/
+.pagingNew{padding-top:4px;display:block; float:right;}
+.pagingNew a{float:left;display:inline-block;height:20px;padding: 0 4px;text-align:center;color:#36c;font-weight:bold;margin-right:5px;}
+.pagingNew a:hover{text-decoration:none;}
+.pagingNew label{float:left;padding:2px 5px 0 0;}
+.pagingNew label.marginTop2px{padding-top:2px;line-height: 22px;}
+.pagingNew input{display:block;float:left;margin:1px 5px 0 0;}
+.pagingNew a.pagingSelect{background:#39c;color:#fff; font-weight:bold;padding:0px 7px 0px;border:1px solid #d7d7d7;margin-top: -1px;}
+.pagingNew a.hidingInfor{height:20px;border:0;background:transparent;}
+.totalRecord {float: right;margin: 6px 10px 0px 0;line-height: 22px;*line-height: 20px;}
+.totalRecord .font {}
+/*跳转按钮样式*/
+.pagingNew a.determineBtn{width:39px;height:22px;line-height:22px;*line-height:24px;text-align:center;padding:0;margin-top: 2px;border:0;font-weight:100;color:#333;background:url(../images/backstageAllButton.png) -329px 0px no-repeat;}
+.pagingNew a.determineBtn:hover{background-position:-329px -23px;}
+/*输入框样式*/
+.inputW20H18{width:20px;height:18px;line-height:18px;}
+/*上一页 默认 滑过 到头样式*/
+.pagingNew a.prevPage{width:12px;height:20px;line-height:20px;color:#36c;background:url(../images/paging.png) 6px -20px no-repeat;border:0;font-weight:bold;}
+.pagingNew a.prevPage:hover{ }
+.pagingNew a.prevEnd{background-position:6px 3px;}
+/*下一页 默认 滑过 到头样式*/
+.pagingNew a.nextPage{width:8px;height:20px;line-height:20px;color:#36c;background:url(../images/paging.png) -14px 3px no-repeat;border:0;font-weight:bold;}
+.pagingNew a.nextPage:hover{ }
+.pagingNew a.nextEnd{background-position:-14px -20px;}
+/*每页条数*/
+.pagingNew span{float:left;height:20px;margin:0px 5px 0 0;line-height: 22px;}
+.pagingNum {height:22px;padding:1px;width:52px;float:left;margin-top: -1px;}
+/*********新分页样式 end*********/
+
+
+/****************所有按钮样式****************/
+.especiallyShortBtn{display:inline-block;width:39px;height:22px;line-height:22px;text-align:center;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -329px 0 no-repeat;}
+.especiallyShortBtn:hover{color:#333;text-decoration:none;background-position:-329px -23px;}
+
+.shortBtn,.shortBtnSelected,.shortBtnDisabled{display:inline-block;width:51px;height:23px;line-height:23px;text-align:center;color:#666;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) 0 0 no-repeat;}
+.shortBtn:hover{color:#666;text-decoration:none;background-position:0 -24px;}
+.shortBtnSelected{background-position:0 -48px;}
+.shortBtnSelected:hover{color:#666;text-decoration:none;}
+.shortBtnDisabled{cursor:default;background-position:-187px -120px;}
+.shortBtnDisabled:hover{cursor:default;color:#666;text-decoration:none;}
+
+.mediumBtn,.mediumBtnSelected{display:inline-block;width:68px;height:23px;line-height:23px;text-align:center;color:#666;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) 0 -72px no-repeat;}
+.mediumBtn:hover{color:#666;text-decoration:none;background-position:0 -96px;}
+.mediumBtnSelected{background-position:0 -120px;}
+.mediumBtnSelected:hover{color:#666;text-decoration:none;}
+
+.longBtn{display:inline-block;width:81px;height:23px;line-height:23px;text-align:center;color:#666;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -69px -72px no-repeat;}
+.longBtn:hover{color:#3f738c;text-decoration:none;background-position:-69px -96px;}
+.exportOrdersBtn{float:left;margin:5px 0 0 10px;}
+
+.especiallyLongBtn{display:inline-block;width:117px;height:23px;line-height:23px;text-align:center;color:#999;text-shadow:-1px 2px 2px #fff;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -69px -120px no-repeat;}
+.especiallyLongBtn:hover{color:#999;text-decoration:none;text-shadow:-1px 2px 2px #fff;}
+
+.blueBtn{display:inline-block;width:81px;height:23px;line-height:23px;text-align:center;color:#fff;font-weight:bold;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -151px -72px no-repeat;}
+.blueBtn:hover{color:#fff;font-weight:bold;text-decoration:none;background-position:-151px -96px;}
+
+.especiallyBlueBtn{display:inline-block;width:81px;height:23px;line-height:23px;text-align:center;color:#fff;font-weight:bold;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -233px -72px no-repeat;}
+.especiallyBlueBtn:hover{color:#fff;font-weight:bold;text-decoration:none;background-position:-233px -96px;}
+
+.shortBlueBtn{display:inline-block;width:51px;height:23px;line-height:23px;text-align:center;color:#fff;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -315px -72px no-repeat;}
+.shortBlueBtn:hover{color:#fff;text-decoration:none;background-position:-315px -96px;}
+
+.shortBlackBtn,.longblueBtn{display:inline-block;width:51px;height:23px;line-height:23px;text-align:center;color:#fff;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -263px -120px no-repeat;}
+.shortBlackBtn:hover{color:#fff;text-decoration:none;}
+
+.shortWhiteSubmitBtn{display:inline-block;width:81px;height:30px;line-height:30px;text-align:center;color:#87abc1;font-weight:bold;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) 0 -144px no-repeat;}
+.shortWhiteSubmitBtn:hover{color:#87abc1;font-weight:bold;text-decoration:none;background-position:-82px -144px;}
+
+.shortBlueSubmitBtn{display:inline-block;width:81px;height:30px;line-height:30px;text-align:center;color:#fff;font-weight:bold;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) 0 -175px no-repeat;}
+.shortBlueSubmitBtn:hover{color:#fff;font-weight:bold;text-decoration:none;background-position:-82px -175px;}
+
+.longWhiteSubmitBtn{display:inline-block;width:112px;height:30px;line-height:30px;text-align:center;color:#87abc1;font-weight:bold;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -164px -144px no-repeat;}
+.longWhiteSubmitBtn:hover{color:#87abc1;font-weight:bold;text-decoration:none;background-position:-277px -144px;}
+
+.longBlueSubmitBtn{display:inline-block;width:112px;height:30px;line-height:30px;text-align:center;color:#fff;font-weight:bold;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -164px -175px no-repeat;}
+.longBlueSubmitBtn:hover{color:#fff;font-weight:bold;text-decoration:none;background-position:-277px -175px;}
+
+.upwardBtn,.upwardBtnSelected{display:inline-block;width:66px;height:23px;padding-right:13px;line-height:23px;text-align:center;color:#333;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -52px 0 no-repeat;}
+.upwardBtn:hover{color:#333;text-decoration:none;background-position:-52px -24px;}
+.upwardBtnSelected{background-position:-52px -48px;}
+.upwardBtnSelected:hover{color:#333;text-decoration:none;}
+
+.downwardBtn,.downwardBtnSelected{display:inline-block;width:66px;height:23px;padding-right:13px;line-height:23px;text-align:center;color:#333;border:0;cursor:pointer;background:url(../images/backstageAllButton.png) -132px 0 no-repeat;}
+.downwardBtn:hover{color:#333;text-decoration:none;background-position:-132px -24px;}
+.downwardBtnSelected{background-position:-132px -48px;}
+.downwardBtnSelected:hover{color:#333;text-decoration:none;}
+
+.longblueBtn {width: 120px;font-weight: bold;background-position:0 -207px ;}
+.longblueBtn:hover {background-position: 0 -231px ;text-decoration: none;}
+
+.disnone{
+    display:none;
+}
+
+/**2014-6-13新增样式**/
+.width180{width:180px;}
+/*.commodityTable .thWidth{width:130px;}*/
+.recommendAgreement dl{overflow:hidden;margin:5px 0;}
+.recommendAgreement dd{float:left;margin-right:10px;}
+.recommendAgreement dt{float:left;margin-right:15px;}
+.selectStyle{height:23px;line-height:23px;border:1px solid #cecece;}
+.prestore,.buyPhone{display:none}
+.inputTextStyle{width:159px;height:25px;border:1px solid #ddd;margin-right:5px;}
+
+/****************所有按钮样式 end****************/
+.gloalError{float: left;height: 21px;width: auto;overflow: hidden;border: 1px solid #ff8080;padding: 3px 5px 0 25px;
+  background: url(../images/order_detail_process/cancel.gif) 3px 3px #ffeaea no-repeat;color: #c00;text-align: left;}
+.selectWidthOne {width: 80px;height: 24px;line-height: 24px;padding: 2px;border: 1px solid #bbbbbb;}
+
+
+
+
+/****************button style end****************/
+/****************step begin****************/
+.stepAreaDiv {
+  position: relative;
+  width: 980px;
+  height: 140px;
+}
+.stepAreaDiv .stepComplete {
+  position: absolute;
+  top: 30px;
+  width: 919px;
+  border-top: 2px solid #5fb4e6;
+  z-index: 10;
+}
+.stepAreaDiv .stepUnfinished {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  border-top: 2px solid #bbbbbb;
+}
+.stepAreaDiv .stepCompleteArea {
+  position: relative;
+  z-index: 20;
+  float: left;
+  padding-top: 18px;
+  height: 28px;
+  text-align: center;
+}
+.stepAreaDiv .stepCompleteArea .stepNum {
+  background: url("../images/stepImages/stepComplete.gif") no-repeat center center;
+  width: 100%;
+  height: 28px;
+  line-height: 28px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.stepAreaDiv .stepCompleteArea .stepAction,
+.stepAreaDiv .stepCompleteArea .stepDate {
+  height: 20px;
+  line-height: 20px;
+}
+.stepAreaDiv .stepOnArea {
+  position: relative;
+  z-index: 20;
+  float: left;
+  height: 48px;
+  text-align: center;
+}
+.stepAreaDiv .stepOnArea .stepNum {
+  background: url("../images/stepImages/stepOn.gif") no-repeat center center;
+  width: 100%;
+  height: 48px;
+  line-height: 28px;
+  margin-bottom: 2px;
+  padding-top: 16px;
+  font-size: 20px;
+  color: #fff;
+}
+.stepAreaDiv .stepOnArea .stepAction,
+.stepAreaDiv .stepOnArea .stepDate {
+  height: 20px;
+  line-height: 20px;
+}
+.stepAreaDiv .stepUnfinishedArea {
+  position: relative;
+  z-index: 20;
+  float: left;
+  top: 18px;
+  height: 28px;
+  text-align: center;
+}
+.stepAreaDiv .stepUnfinishedArea .stepNum {
+  background: url("../images/stepImages/stepUnfinished.gif") no-repeat center center;
+  width: 100%;
+  height: 28px;
+  line-height: 28px;
+  margin-bottom: 20px;
+}
+.stepAreaDiv .stepUnfinishedArea .stepAction,
+.stepAreaDiv .stepUnfinishedArea .stepDate {
+  height: 20px;
+  line-height: 20px;
+}
+/****************step end****************/
