@@ -11,10 +11,10 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.Strings;
 import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.*;
+import org.nutz.mvc.filter.CheckSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import java.util.Map;
  * @since JDK 1.8
  * 类说明:
  */
-//@Filters(@By(type=CheckSession.class, args={"me", "/"}))
+@Filters(@By(type=CheckSession.class, args={"me", "/login/init"}))
 @IocBean
 @At("/user")
 @Ok("json:{locked:'password|salt',ignoreNull:true}")
@@ -46,22 +46,7 @@ public class UserModule {
         return dao.count(User.class);
     }
 
-    @At
-//    @Filters()
-    public Object login(@Param("username") String name, @Param("password") String password, HttpSession session){
-        User user = dao.fetch(User.class, Cnd.where("name","=",name).and("password","=",password));
-        if(null == user){
-            return false;
-        }else{
-            session.setAttribute("me",user.getId());
-            return true;
-        }
-    }
-    @At
-    @Ok(">>:/")
-    public void logout(HttpSession session){
-        session.invalidate();
-    }
+
 
     @At
     public Object add(@Param("..")User user){
@@ -114,7 +99,7 @@ public class UserModule {
     }
 
     @At("/")
-    @Ok("jsp:jsp.user.list") // 真实路径是 /WEB-INF/jsp/user/list.jsp
+    @Ok("jsp:jsp.bootstrap-jsp.user-list") // 真实路径是 /WEB-INF/jsp/bootstrap-jsp/user-list.jsp
     public void index() {
     }
 

@@ -1,13 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="zh-CN">
+<%--
+  Created by IntelliJ IDEA.
+  User: chejingchi
+  Date: 15/12/23
+  Time: 下午4:18
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+    <title>user-list</title>
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -24,17 +29,10 @@
         var base = '${base}';
     </script>
 </head>
+
 <body>
-<!--my include about head.jsp-->
-<jsp:include page="head/login-head.jsp" />
+<jsp:include page="head/head.jsp" />
 
 
-
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../js/common/jquery-1.11.3.min.js"></script>
-<script src="../js/login/login.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../js/common/bootstrap.min.js"></script>
 </body>
 </html>
