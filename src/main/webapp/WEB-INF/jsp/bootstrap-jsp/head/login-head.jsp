@@ -25,6 +25,8 @@
                     <input type="password" id="password" placeholder="Password" value="123456" class="form-control">
                 </div>
                 <button id="login" class="btn btn-success">Sign in</button>
+                <span id="user" style="color: red;font-size: 20px;margin-right: 13px;" style="display: none"></span>
+                <button id="logout" class="btn btn-success" style="display: none">Sign out</button>
             </div>
         </div>
     </div>
