@@ -1,11 +1,54 @@
-var navbar = React.createClass({
+var DropDownMenu = React.createClass({
     render : function(){
         return(
-            <div id="navbar" class="navbar-collapse collapse">
-            </div>
+            <ul className="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" className="divider"></li>
+                <li className="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+            </ul>
         )
     }
 })
+
+var DropDown = React.createClass({
+    render : function(){
+        return(
+            <li className="dropdown">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown"
+                   role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span>
+                </a>
+                <DropDownMenu />
+            </li>
+        )
+    }
+})
+
+var NavbarUl = React.createClass({
+    render : function(){
+        return(
+            <ul className="nav navbar-nav">
+                <li className="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <DropDown />
+            </ul>
+        )
+    }
+});
+
+var Navbar = React.createClass({
+    render : function(){
+        return(
+            <div id="navbar" className="navbar-collapse collapse">
+                <NavbarUl />
+            </div>
+        )
+    }
+});
 
 var Button = React.createClass({
     render : function(){
@@ -31,6 +74,7 @@ var LoginHead = React.createClass({
                         <Button />
                         <a className="navbar-brand" href="#">nutz-test</a>
                     </div>
+                    <Navbar />
                 </div>
             </nav>
         );
