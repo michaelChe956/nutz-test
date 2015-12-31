@@ -1,5 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%--
+  Created by IntelliJ IDEA.
+  User: chejingchi
+  Date: 15/12/31
+  Time: 上午11:48
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -27,11 +33,7 @@
     </script>
 </head>
 <body>
-<!--my include about head.jsp-->
-<jsp:include page="head/login-head.jsp" />
-
-<%--<div id="login-head"></div>--%>
-
+<div id="login-head"></div>
 
 
 

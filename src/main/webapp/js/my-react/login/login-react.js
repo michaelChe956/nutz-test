@@ -31,9 +31,9 @@ var NavbarUl = React.createClass({
     render : function(){
         return(
             <ul className="nav navbar-nav">
-                <li className="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li className="active"><a href={this.props.nav_List.home}>Home</a></li>
+                <li><a href={this.props.nav_List.about}>About</a></li>
+                <li><a href={this.props.nav_List.contact}>Contact</a></li>
                 <DropDown />
             </ul>
         )
@@ -44,7 +44,7 @@ var Navbar = React.createClass({
     render : function(){
         return(
             <div id="navbar" className="navbar-collapse collapse">
-                <NavbarUl />
+                <NavbarUl nav_List = {this.props.nav_List} />
             </div>
         )
     }
@@ -72,16 +72,31 @@ var LoginHead = React.createClass({
                 <div className="container">
                     <div className="navbar-header">
                         <Button />
-                        <a className="navbar-brand" href="#">nutz-test</a>
+                        <a className="navbar-brand" href="#">
+                            {this.props.data.projectName}
+                        </a>
                     </div>
-                    <Navbar />
+                    <Navbar nav_List = {this.props.data.url_List} />
                 </div>
             </nav>
         );
     }
 })
 
+var data = function(){
+    return {
+        projectName: "nutz-test",
+        url : "",
+        url_List: {
+            home :  "../home/index",
+            about : "../home/about",
+            contact : "../home/contact"
+        }
+    }
+}
+
+
 React.render(
-    <LoginHead />,
+    <LoginHead data = {data()} />,
     document.getElementById('login-head')
 );

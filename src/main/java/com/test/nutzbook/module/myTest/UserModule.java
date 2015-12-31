@@ -95,7 +95,6 @@ public class UserModule {
         qr.setList(dao.query(User.class,cnd,pager));
         qr.setPager(pager);
         return qr;
-
     }
 
     @At("/")

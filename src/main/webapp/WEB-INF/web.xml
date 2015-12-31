@@ -3,7 +3,7 @@
   <display-name>nutzbook</display-name>
   <filter>
     <filter-name>nutz</filter-name>
-    <filter-class>org.nutz.mvc.NutFilter</filter-class>
+    <filter-class>com.test.nutzbook.mvc.NutzTestNutFilter</filter-class>
     <init-param>
       <param-name>modules</param-name>
       <param-value>com.test.nutzbook.module.MainModule</param-value>
