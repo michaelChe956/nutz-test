@@ -28,9 +28,9 @@
 </head>
 <body>
 <!--my include about head.jsp-->
-<jsp:include page="head/login-head.jsp" />
+<%--<jsp:include page="head/login-head.jsp" />--%>
 
-<%--<div id="login-head"></div>--%>
+<div id="login-head"></div>
 
 
 

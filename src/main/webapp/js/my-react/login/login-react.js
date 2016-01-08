@@ -1,6 +1,6 @@
 var DropDownMenu = React.createClass({
-    render : function(){
-        return(
+    render: function () {
+        return (
             <ul className="dropdown-menu">
                 <li><a href="#">Action</a></li>
                 <li><a href="#">Another action</a></li>
@@ -15,8 +15,8 @@ var DropDownMenu = React.createClass({
 })
 
 var DropDown = React.createClass({
-    render : function(){
-        return(
+    render: function () {
+        return (
             <li className="dropdown">
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown"
                    role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span>
@@ -28,10 +28,10 @@ var DropDown = React.createClass({
 })
 
 var NavbarUl = React.createClass({
-    render : function(){
-        return(
+    render: function () {
+        return (
             <ul className="nav navbar-nav">
-                <li className="active"><a href={this.props.nav_List.home}>Home</a></li>
+                <li onClick={this.props.clickCallback} className="active"><a href={this.props.nav_List.home}>Home</a></li>
                 <li><a href={this.props.nav_List.about}>About</a></li>
                 <li><a href={this.props.nav_List.contact}>Contact</a></li>
                 <DropDown />
@@ -41,18 +41,21 @@ var NavbarUl = React.createClass({
 });
 
 var Navbar = React.createClass({
-    render : function(){
-        return(
+    clickTest : function(){
+        alert("test");
+    },
+    render: function () {
+        return (
             <div id="navbar" className="navbar-collapse collapse">
-                <NavbarUl nav_List = {this.props.nav_List} />
+                <NavbarUl clickCallback={this.clickTest} nav_List={this.props.nav_List}/>
             </div>
         )
     }
 });
 
 var Button = React.createClass({
-    render : function(){
-        return(
+    render: function () {
+        return (
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span className="sr-only">Toogle navigation</span>
@@ -76,27 +79,25 @@ var LoginHead = React.createClass({
                             {this.props.data.projectName}
                         </a>
                     </div>
-                    <Navbar nav_List = {this.props.data.url_List} />
+                    <Navbar nav_List={this.props.data.url_List}/>
                 </div>
             </nav>
         );
     }
 })
 
-var data = function(){
-    return {
-        projectName: "nutz-test",
-        url : "",
-        url_List: {
-            home :  "../home/index",
-            about : "../home/about",
-            contact : "../home/contact"
-        }
+var data = {
+    projectName: "nutz-test",
+    url: "",
+    url_List: {
+        home: "../home/index",
+        about: "../home/about",
+        contact: "../home/contact"
     }
 }
 
 
 React.render(
-    <LoginHead data = {data()} />,
+    <LoginHead data={data}/>,
     document.getElementById('login-head')
 );
