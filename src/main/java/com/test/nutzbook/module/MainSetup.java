@@ -28,7 +28,10 @@ public class MainSetup implements Setup {
         if (dao.count(User.class) == 0) {
             User user = new User();
             user.setName("admin");
-            user.setPassword("123456");
+            user.setUsername("admin");
+            user.setPassword("admin");
+            user.setLibraryCardNo("0");
+            user.setStudentId("123456789");
             user.setCreateTime(new Date());
             user.setUpdateTime(new Date());
             dao.insert(user);

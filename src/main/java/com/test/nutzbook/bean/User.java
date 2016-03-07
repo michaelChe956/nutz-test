@@ -23,12 +23,54 @@ public class User {
     @Name
     @Column
     private String name;
-    @Column("passwd")
-    private String password;
+
     @Column
-    private String salt;
+    private String username;
+
+    @Column("password")
+    private String password;
+
+    @Column
+    private String studentId;
+
+    @Column
+    private int sex;
+
+    @Column("libraryCardNo")
+    private String libraryCardNo;
+
+    @Column("classId")
+    private int classId;
+
+    @Column("studyState")
+    private int studyState;
+
+    @Column("telephone")
+    private String telephone;
+
+    @Column
+    private String anotherTphone;
+
+    @Column
+    private String email;
+
+    @Column
+    private String booksId;
+
+    @Column
+    private String qq;
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
     @Column("createTime")
     private Date createTime;
+
     @Column("updateTime")
     private Date updateTime;
 
@@ -41,8 +83,18 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
+                ", sex='" + sex + '\'' +
+                ", libraryCardNo='" + libraryCardNo + '\'' +
+                ", classId='" + classId + '\'' +
+                ", studyState='" + studyState + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", anotherTphone='" + anotherTphone + '\'' +
+                ", email='" + email + '\'' +
+                ", booksId='" + booksId + '\'' +
+                ", studentId='" + studentId + '\'' +
+                ", qq='" + qq + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';
@@ -72,14 +124,6 @@ public class User {
         this.password = password;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -94,5 +138,85 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getLibraryCardNo() {
+        return libraryCardNo;
+    }
+
+    public void setLibraryCardNo(String libraryCardNo) {
+        this.libraryCardNo = libraryCardNo;
+    }
+
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    public int getStudyState() {
+        return studyState;
+    }
+
+    public void setStudyState(int studyState) {
+        this.studyState = studyState;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAnotherTphone() {
+        return anotherTphone;
+    }
+
+    public void setAnotherTphone(String anotherTphone) {
+        this.anotherTphone = anotherTphone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBooksId() {
+        return booksId;
+    }
+
+    public void setBooksId(String booksId) {
+        this.booksId = booksId;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 }
