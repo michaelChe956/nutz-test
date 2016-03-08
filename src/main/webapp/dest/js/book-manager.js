@@ -251,17 +251,20 @@ $(function () {
                 '</div></form></div>';
             $("#book-detail-info").find(".modal-body").html(bookDetailInfo);
         },
-        changeMyLinkInfo : function(){
+        changeMyLinkInfo: function () {
 
         }
     }
     $(window).load(function () {
         var bookInfo = data.bookList;
-        PAGER.initPager(1, bookInfo.length, 10, 7, 'book-info-pager', 'book-info-pager-div',
-            bookInfo, BookManager.getBookInfoData);
-
-        PAGER.initPager(1, bookInfo.length, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
-            bookInfo, BookManager.checkBookCondition);
+        var bookInfoPage = new PAGER();
+        pageObjArr.push(bookInfoPage);
+        bookInfoPage.initPager(1, bookInfo.length, 10, 7, 'book-info-pager', 'book-info-pager-div',
+            bookInfo, BookManager.getBookInfoData, 0);
+        var readInfo = new PAGER();
+        pageObjArr.push(readInfo);
+        readInfo.initPager(1, bookInfo.length, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
+            bookInfo, BookManager.checkBookCondition, 1);
         BookManager.setSelfInfo(data.student);
     });
 
@@ -269,7 +272,7 @@ $(function () {
         BookManager.showBookDetailInfo($(this));
     });
 
-    $("#userInfo").on("click","#change-link-info",function(){
+    $("#userInfo").on("click", "#change-link-info", function () {
         BookManager.changeMyLinkInfo();
     });
 });
