@@ -70,18 +70,18 @@ PAGER.prototype.renderPager = function () {
     var pageStr = "<div id='" + this.pageDivName + "'></div>";
     var preStr = '<ul id = "paging" class = "pagination">';
     preStr += '<li><a>共' + this.totalPages + '页</a></li>'
-    preStr += "<li><a id='prePage' onclick='PAGER.gotoPrePage()'>&laquo;</a></li>";
-    var nextStr = "<li><a id='nextPage' onclick='PAGER.gotoNextPage()'>&raquo;</a></li>";
+    preStr += "<li><a id='prePage' onclick='UsePager.gotoPrePage(" + this.position + ")'>&laquo;</a></li>";
+    var nextStr = "<li><a id='nextPage' onclick='UsePager.gotoNextPage(" + this.position + ")'>&raquo;</a></li>";
     nextStr += '<li><label class="paging-style">至</label><input type="text" value="" class="paging-style" ' +
         'id="inputPageNo" name="inputPageNo"><label class="paging-style">页</label></li>';
-    nextStr += '<li><a href="javascript:void(0);" class="fontC36cS12 jump" title="" ' +
-        'onclick="PAGER.gotoPage(inputPageNo.value)">跳转</a></li>';
+    nextStr += '<li><a class="fontC36cS12 jump" title="" ' +
+        'onclick="UsePager.gotoChoosePage(' + this.position + ')">跳转</a></li>';
     var cenStr = "";
     for (var i = 0; i < this.pageNumArr.length; i++) {
         if (this.currentPage == this.pageNumArr[i]) {
-            cenStr += "<li><a onclick='gotoPage(" + this.position + "," + this.pageNumArr[i] + ")'>" + this.pageNumArr[i] + "</a></li>";
+            cenStr += "<li class='active'><a onclick='UsePager.gotoPage(" + this.position + "," + this.pageNumArr[i] + ")'>" + this.pageNumArr[i] + "</a></li>";
         } else {
-            cenStr += "<li><a onclick='gotoPage(" + this.position + "," + this.pageNumArr[i] + ")'>" + this.pageNumArr[i] + "</a></li>";
+            cenStr += "<li><a onclick='UsePager.gotoPage(" + this.position + "," + this.pageNumArr[i] + ")'>" + this.pageNumArr[i] + "</a></li>";
         }
     }
     pageStr = pageStr + preStr + cenStr + nextStr + "</ul>";
@@ -142,13 +142,34 @@ PAGER.prototype.gotoPage = function (targetPage) {
     this.renderPager();
 }
 
-var gotoPage = function (position, targetPage) {
-    var target = pageObjArr[position];
-    if (targetPage < 1) {
-        targetPage = 1;
-    } else if (targetPage > target.totalPages) {
-        targetPage = target.totalPages;
+var UsePager = {
+    target: null,
+    gotoPage: function (position, targetPage) {
+        this.target = pageObjArr[position];
+        this.target.gotoPage(targetPage);
+    },
+    gotoChoosePage: function (position) {
+        this.target = pageObjArr[position];
+        var inputPageNo = this.target.pager.getElementsByTagName("input")[0].value;
+
+        if (inputPageNo > 0 && inputPageNo < this.target.totalPages + 1) {
+            this.target.gotoPage(inputPageNo);
+        }
+    },
+    gotoNextPage: function (position) {
+        this.target = pageObjArr[position];
+        this.target.gotoNextPage();
+    },
+    gotoPrePage: function (position) {
+        this.target = pageObjArr[position];
+        this.target.gotoPrePage();
+    },
+    gotoLastPage: function (position) {
+        this.target = pageObjArr[position];
+        this.target.gotoLastPage();
+    },
+    gotoFirstPage: function (position) {
+        this.target = pageObjArr[position];
+        this.target.gotoFirstPage();
     }
-    target.currentPage = targetPage;
-    target.renderPager();
 }
