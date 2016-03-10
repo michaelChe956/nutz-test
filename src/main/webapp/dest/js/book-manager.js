@@ -1,149 +1,6 @@
 var data = {
-    "bookList": [
-        {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        },
-        {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 0
-        }, {
-            "bookCode": 1,
-            "bookName": "马克思列宁主义",
-            "author": "马克思",
-            "publishingHouse": "新华",
-            "type": "小说",
-            "num": 10,
-            "canLend": 1
-        }
-    ],
-    "student": user,
-    "bookInfo": {
-        "bookCode": 1,
-        "bookName": "马克思列宁主义",
-        "author": "马克思",
-        "publishingHouse": "新华",
-        "type": "小说",
-        "num": 10,
-        "canLend": 0,
-        "bookBriefIntroduction": "hahahahaha",
-        "pages": 500,
-        "version": "第四版"
-    }
+    "bookList": bookList,
+    "student": user
 }
 $(function () {
     //
@@ -164,15 +21,15 @@ $(function () {
                     break;
                 } else {
                     dataSpace += '<tr class="show-detail-info" data-toggle="modal" data-target="#book-detail-info">';
+                    dataSpace += '<input type="hidden" value="' + finalData[dataId].id + '" />';
                     dataSpace += '<td><p>' + finalData[dataId].bookCode + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].bookName + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].author + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].publishingHouse + '</p></td>';
-                    dataSpace += '<td><p>' + finalData[dataId].type + '</p></td>';
+                    dataSpace += '<td><p>' + finalData[dataId].typeName + '</p></td>';
                     dataSpace +=
-                        finalData[dataId].canLend == 0 ? '<td>' +
-                        '<button class="btn btn-large btn-primary" type="button" ' +
-                        'style="width: 74px">借阅</button>' : '<td><p class="text-success">已经借出去</p></td>';
+                        finalData[dataId].canLend == 0 ? '<td><p class="text-success">可以借阅</p></td>'
+                            : '<td><p class="text-success">已经借出去</p></td>';
                     dataSpace += '</tr>';
                 }
             }
@@ -199,7 +56,7 @@ $(function () {
                     dataSpace += '<td><p>' + finalData[dataId].bookName + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].author + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].publishingHouse + '</p></td>';
-                    dataSpace += '<td><p>' + finalData[dataId].type + '</p></td>';
+                    dataSpace += '<td><p>' + finalData[dataId].typeName + '</p></td>';
                     dataSpace +=
                         finalData[dataId].canLend == 0 ? '<td>' +
                         '<button class="btn btn-large btn-primary" type="button" ' +
@@ -236,23 +93,27 @@ $(function () {
             $("#userInfo").html(userInfo);
         },
         showBookDetailInfo: function (bookRow) {
-            $($(bookRow).find("td")[0]).text();
-            var bookDetailInfo = '<div class="row"><form class="form-horizontal" role="form">' +
-                '<div class="row"><div class="form-group col-sm-3"><label class=" col-sm-6 control-label">' +
-                '书籍名称:</label> <p class="col-sm-6 control-label text-left">' + data.bookInfo.bookName +
-                '</p> </div> <div class="form-group col-sm-3"><label class=" col-sm-6 control-label">' +
-                '作者:</label> <label class="col-sm-6 control-label">' + data.bookInfo.author +
-                '</label></div><div class="form-group col-sm-3"><label class=" col-sm-6 control-label">' +
-                '页数:</label> <label class="col-sm-6 control-label">' + data.bookInfo.pages +
-                '</label> </div> <div class="form-group col-sm-3"><label class=" col-sm-6 control-label">' +
-                '版本:</label> <label class="col-sm-6 control-label">' + data.bookInfo.version +
-                '</label> </div> </div> <div class="media-body" style="padding-left: 20px;padding-right: 20px">' +
-                '<h4 class="media-heading">图书简介:</h4>' + data.bookInfo.bookBriefIntroduction +
-                '</div></form></div>';
+            var bookId = $($(bookRow).find("input")).val();
+            var bookDetailInfo = '<table class="table"><tbody><tr><td class="book-info-width">书籍名称:</td> ' +
+                '<td class="book-info-width">' + data.bookList[bookId].bookName +
+                '</td> <td class="book-info-width">作者:</td> <td class="book-info-width">' + data.bookList[bookId].author +
+                '</td> </tr> <tr> <td>页数:</td> <td>' + data.bookList[bookId].pages +
+                '</td> <td>版本:</td> <td>' + data.bookList[bookId].version +
+                '</td> </tr> <tr> <td>出版社:</td> <td>' + data.bookList[bookId].publishingHouse +
+                '</td> <td>类型:</td> <td>' + data.bookList[bookId].type +
+                '</td> </tr> <tr> <td rowspan="2"  class="info-brief">图书简介:</td> ' +
+                '<td rowspan="2" colspan="3">' + data.bookList[bookId].bookBriefIntroduction +
+                '</td> <tr></tr><tr> <td>数量:</td> <td>' + data.bookList[bookId].num +
+                '</td> <td>可借阅</td> ' +
+                '<td><button class="btn btn-large btn-primary" type="button" style="width: 74px">借阅</button> </td>' +
+                '</tr> </tr> </tbody> </table>';
             $("#book-detail-info").find(".modal-body").html(bookDetailInfo);
         },
         changeMyLinkInfo: function () {
-
+        },
+        lendBook: function () {
+            alert("can lend");
+            $("#book-detail-info").find(".close").click();
         }
     }
     $(window).load(function () {
@@ -274,5 +135,8 @@ $(function () {
 
     $("#userInfo").on("click", "#change-link-info", function () {
         BookManager.changeMyLinkInfo();
+    });
+    $("#book-info-pager").on("click", ".lend", function () {
+        BookManager.lendBook();
     });
 });

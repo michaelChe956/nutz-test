@@ -41,3 +41,12 @@ ul.nav-tabs.affix {
 
 .my-modal-width {
   width: 1000px; }
+
+.my-modal-for-book-info {
+  width: 700px; }
+
+.book-info-width {
+  width: 25%; }
+
+.info-brief {
+  width: 25%; }

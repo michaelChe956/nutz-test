@@ -1,6 +1,8 @@
 package com.test.nutzbook.module.bookManager;
 
+import com.test.nutzbook.bean.Book;
 import com.test.nutzbook.bean.User;
+import com.test.nutzbook.bean.enumerate.BookType;
 import com.test.nutzbook.common.RMap;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
@@ -13,6 +15,8 @@ import org.nutz.json.Json;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Ok;
+
+import java.util.List;
 
 /**
  * @author chejingchi
@@ -36,8 +40,12 @@ public class bookManagerIndexModule {
     @Ok("jsp:html.jsp.book-manager")
     public Object init() {
         Condition condition = Cnd.where("username", "=", "wunan");
-        User user = Daos.ext(dao, FieldFilter.create(User.class, null,"^password|id$",true)).fetch(User.class, condition);
-
-        return RMap.of("user", Json.toJson(user));
+        User user =
+                Daos.ext(dao, FieldFilter.create(User.class, null,"^password|id$",true)).fetch(User.class, condition);
+        List<Book> bookList = dao.query(Book.class,null);
+        for(Book book : bookList){
+            book.setTypeName(BookType.useBookType(book.getType()));
+        }
+        return RMap.of("user", Json.toJson(user),"bookList",Json.toJson(bookList));
     }
 }

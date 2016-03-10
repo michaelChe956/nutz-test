@@ -30,6 +30,9 @@ public class Book {
     private String publishingHouse;
     @Column
     private int type;
+
+    private String typeName;
+
     @Column
     private int num;
     @Column
@@ -152,5 +155,29 @@ public class Book {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

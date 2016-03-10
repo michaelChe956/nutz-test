@@ -27,6 +27,7 @@
             });
         });
         var user = ${obj.user};
+        var bookList = ${obj.bookList};
     </script>
     <script src="${base}/dest/js/book-manager.js"></script>
 </head>
@@ -405,7 +406,7 @@
 
 <div class="modal fade" id="book-detail-info" tabindex="-1" role="dialog"
      aria-labelledby="bookDetailInfoLabel" aria-hidden="true">
-    <div class="modal-dialog my-modal-width">
+    <div class="modal-dialog my-modal-for-book-info">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close"
