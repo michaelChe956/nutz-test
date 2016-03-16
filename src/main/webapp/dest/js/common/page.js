@@ -72,7 +72,7 @@ PAGER.prototype.renderPager = function () {
     preStr += '<li><a>共' + this.totalPages + '页</a></li>'
     preStr += "<li><a id='prePage' onclick='UsePager.gotoPrePage(" + this.position + ")'>&laquo;</a></li>";
     var nextStr = "<li><a id='nextPage' onclick='UsePager.gotoNextPage(" + this.position + ")'>&raquo;</a></li>";
-    nextStr += '<li><label class="paging-style">至</label><input type="text" value="" class="paging-style" ' +
+    nextStr += '<li><label class="paging-style">至</label><input type="text" value="" class="inputPageNo paging-style" ' +
         'id="inputPageNo" name="inputPageNo"><label class="paging-style">页</label></li>';
     nextStr += '<li><a class="fontC36cS12 jump" title="" ' +
         'onclick="UsePager.gotoChoosePage(' + this.position + ')">跳转</a></li>';
@@ -150,7 +150,7 @@ var UsePager = {
     },
     gotoChoosePage: function (position) {
         this.target = pageObjArr[position];
-        var inputPageNo = this.target.pager.getElementsByTagName("input")[0].value;
+        var inputPageNo = this.target.pager.getElementsByClassName("inputPageNo")[0].value;
 
         if (inputPageNo > 0 && inputPageNo < this.target.totalPages + 1) {
             this.target.gotoPage(inputPageNo);

@@ -44,6 +44,15 @@ public class Book {
     @Column
     private String version;
 
+    @Column
+    private String libraryRow;
+
+    @Column
+    private String libraryColumn;
+
+    @Column
+    private int price;
+
     @Column("createTime")
     private Date createTime;
 
@@ -64,6 +73,9 @@ public class Book {
                 ", bookBriefIntroduction='" + bookBriefIntroduction + '\'' +
                 ", pages=" + pages +
                 ", version='" + version + '\'' +
+                ", libraryRow='" + libraryRow + '\'' +
+                ", libraryColumn='" + libraryColumn + '\'' +
+                ", price='" + price + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';
@@ -179,5 +191,29 @@ public class Book {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getLibraryRow() {
+        return libraryRow;
+    }
+
+    public void setLibraryRow(String libraryRow) {
+        this.libraryRow = libraryRow;
+    }
+
+    public String getLibraryColumn() {
+        return libraryColumn;
+    }
+
+    public void setLibraryColumn(String libraryColumn) {
+        this.libraryColumn = libraryColumn;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

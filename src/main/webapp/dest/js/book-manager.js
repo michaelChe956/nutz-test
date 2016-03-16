@@ -3,8 +3,9 @@ var data = {
     "student": user
 }
 $(function () {
-    //
+    //图书管理
     var BookManager = {
+        //渲染书籍信息
         getBookInfoData: function (tp, pageSize, finalData) {
             var dataSpace = '<div class="data-render"><table class="table table-hover" id="Pui">';
             dataSpace += '<thead><tr>';
@@ -29,13 +30,14 @@ $(function () {
                     dataSpace += '<td><p>' + finalData[dataId].typeName + '</p></td>';
                     dataSpace +=
                         finalData[dataId].canLend == 0 ? '<td><p class="text-success">可以借阅</p></td>'
-                            : '<td><p class="text-success">已经借出去</p></td>';
+                            : '<td><p class="text-danger">已经借出去</p></td>';
                     dataSpace += '</tr>';
                 }
             }
             dataSpace += '</table></div>'
             $("#book-info-pager-div").html(dataSpace);
         },
+        //渲染查询书籍信息情况
         checkBookCondition: function (tp, pageSize, finalData) {
             var dataSpace = '<div class="data-render"><table class="table table-hover" id="Pui">';
             dataSpace += '<thead><tr>';
@@ -57,21 +59,29 @@ $(function () {
                     dataSpace += '<td><p>' + finalData[dataId].author + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].publishingHouse + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].typeName + '</p></td>';
-                    dataSpace +=
-                        finalData[dataId].canLend == 0 ? '<td>' +
-                        '<button class="btn btn-large btn-primary" type="button" ' +
-                        'style="width: 74px">借阅</button>' : '<td><p class="text-success">已经借出去</p></td>';
-                    dataSpace += '<td><button class="btn btn-primary" ' +
-                        'data-toggle="modal"data-target="#lendModal">借书</button></td>';
+                    dataSpace += '<td><p class="text-success">' + finalData[dataId].num + '</p></td>';
+                    if (finalData[dataId].canLend == 0) {
+                        dataSpace += '<td><button class="btn btn-primary" ' +
+                            'data-toggle="modal"data-target="#lendModal">借书</button></td>';
+                    } else {
+                        dataSpace += '<td><button class="btn btn-primary" ' +
+                            'data-toggle="modal"data-target="#lendModal" disabled="disabled">借书</button></td>';
+                    }
                     dataSpace += '<td><button class="btn btn-primary" ' +
                         'data-toggle="modal"data-target="#returnModal">还书</button></td>';
                     dataSpace += '</tr>';
+
                 }
             }
             dataSpace += '</table></div>'
             $("#book-read-info-pager-div").html(dataSpace);
         },
+        //渲染个人信息
         setSelfInfo: function (student) {
+            if (student.id <= 0) {
+                $("#section-1").hide();
+                return;
+            }
             student.sex = student.sex == 0 ? '女' : '男';
             student.studyState = student.sex == 0 ? '在读' : '离校';
             var userInfo = '<table class="table table-bordered"><caption></caption><thead></thead><tbody><tr>' +
@@ -92,10 +102,14 @@ $(function () {
                 '</div></td></tr></tbody></table>';
             $("#userInfo").html(userInfo);
         },
+        //展示书籍信息
         showBookDetailInfo: function (bookRow) {
             var bookId = $($(bookRow).find("input")).val();
-            var bookDetailInfo = '<table class="table"><tbody><tr><td class="book-info-width">书籍名称:</td> ' +
-                '<td class="book-info-width">' + data.bookList[bookId].bookName +
+            var bookDetailInfo = '<table class="table">';
+            bookDetailInfo += '<input type="hidden" value="' + bookId + '" />';
+            bookId -= 1;
+            bookDetailInfo += '<tbody><tr><td class="book-info-width">书籍名称:</td> ';
+            bookDetailInfo += '<td class="book-info-width">' + data.bookList[bookId].bookName +
                 '</td> <td class="book-info-width">作者:</td> <td class="book-info-width">' + data.bookList[bookId].author +
                 '</td> </tr> <tr> <td>页数:</td> <td>' + data.bookList[bookId].pages +
                 '</td> <td>版本:</td> <td>' + data.bookList[bookId].version +
@@ -104,18 +118,141 @@ $(function () {
                 '</td> </tr> <tr> <td rowspan="2"  class="info-brief">图书简介:</td> ' +
                 '<td rowspan="2" colspan="3">' + data.bookList[bookId].bookBriefIntroduction +
                 '</td> <tr></tr><tr> <td>数量:</td> <td>' + data.bookList[bookId].num +
-                '</td> <td>可借阅</td> ' +
-                '<td><button class="btn btn-large btn-primary" type="button" style="width: 74px">借阅</button> </td>' +
+                '</td> <td class="text-success">可借阅</td> ' +
+                '<td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px">借阅</button> </td>' +
                 '</tr> </tr> </tbody> </table>';
             $("#book-detail-info").find(".modal-body").html(bookDetailInfo);
+            var num = data.bookList[bookId].num;
+            if (0 >= num) {
+                $(".lend-the-book").parent().prev().text("已全部借出").removeClass("text-success").addClass('text-danger');
+                $(".lend-the-book").attr("disabled", "disabled");
+            }
+
         },
         changeMyLinkInfo: function () {
         },
-        lendBook: function () {
-            alert("can lend");
-            $("#book-detail-info").find(".close").click();
+        lendBook: function ($bookInfo) {
+            var bookId =
+                $bookInfo.parent().parent().parent().parent().find("input").val();
+            $.ajax({
+                type: "post",
+                url: lendBookUrl,
+                data: {bookId: bookId},
+                dataType: "json",
+                success: function (data) {
+                    var num = data.book.num;
+                    if (0 >= num) {
+                        $bookInfo.parent().prev().text("已全部借出").removeClass("text-success").addClass('text-danger');
+                    } else {
+                        $bookInfo.html(data.book.libraryRow + "排" + +data.book.libraryColumn + "列");
+                    }
+                    $bookInfo.attr("disabled", "disabled");
+                    $bookInfo.parent().prev().prev().text(num);
+                }
+            });
+        },
+        //刷新页面的方法
+        closeAndRefresh: function () {
+            window.location.reload();
+        },
+        //按条件查询图书
+        renderBookInfoByCondition: function () {
+
         }
     }
+
+    var Condition = function (bookCode, bookName, type, author) {
+        this.bookCode = bookCode;
+        this.bookName = bookName;
+        this.type = type;
+        this.author = author;
+    }
+    Condition.prototype.search = function () {
+        $.ajax({
+            url: searchBookInfoUrl,
+            type: "post",
+            data: param,
+            dataType: "json",
+            success: function (data) {
+                readInfo.initPager(1, data.bookInfo, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
+                    bookInfo, BookManager.checkBookCondition, 1);
+            }
+
+        })
+    }
+
+
+    var AuthorityCheck = function (student) {
+        this.student = student;
+    }
+    AuthorityCheck.prototype.initCheck = function () {
+        $(".personInfo").hide();
+        $(".bookInfo").hide();
+        $(".putInBook").hide();
+        $(".checkInLendInfo").hide();
+        $(".lendBook").hide();
+        $(".returnBook").hide();
+        this.checkUser();
+    }
+    AuthorityCheck.prototype.checkUser = function () {
+        if (this.student.id <= 0) {
+            $(".bookInfo").show();
+        } else if (this.student.id == 1) {
+            $(".putInBook").show();
+            $(".checkInLendInfo").show();
+            $(".lendBook").show();
+            $(".returnBook").show();
+        } else {
+            $(".personInfo").show();
+            $(".bookInfo").show();
+        }
+    }
+
+    var Book = function (bookCode, bookName, type,
+                         price, author, publishingHouse,
+                         num, version, applyInStaff,
+                         libraryRow, libraryColumn) {
+        this.bookCode = bookCode;
+        this.bookName = bookName;
+        this.type = type;
+        this.price = price;
+        this.author = author;
+        this.publishingHouse = publishingHouse;
+        this.num = num;
+        this.version = version;
+        this.applyInStaff = applyInStaff;
+        this.libraryRow = libraryRow;
+        this.libraryColumn = libraryColumn;
+    }
+
+    Book.prototype.applyInStore = function () {
+        var param = {
+            bookCode: this.bookCode,
+            bookName: this.bookName,
+            type: this.type,
+            price: this.price,
+            author: this.author,
+            publishingHouse: this.publishingHouse,
+            num: this.num,
+            version: this.version,
+            applyInStaff: this.applyInStaff,
+            libraryRow: this.libraryRow,
+            libraryColumn: this.libraryColumn
+        }
+        $.ajax({
+            url: bookApplyInStoreUrl,
+            type: "post",
+            data: param,
+            dataType: "json",
+            success: function (data) {
+                if (data) {
+                    alert("插入成功");
+                }
+            }
+        })
+    }
+
+
     $(window).load(function () {
         var bookInfo = data.bookList;
         var bookInfoPage = new PAGER();
@@ -127,6 +264,8 @@ $(function () {
         readInfo.initPager(1, bookInfo.length, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
             bookInfo, BookManager.checkBookCondition, 1);
         BookManager.setSelfInfo(data.student);
+        var authority = new AuthorityCheck(data.student);
+        authority.initCheck();
     });
 
     $("#book-info-pager").on("click", ".show-detail-info", function () {
@@ -136,7 +275,37 @@ $(function () {
     $("#userInfo").on("click", "#change-link-info", function () {
         BookManager.changeMyLinkInfo();
     });
-    $("#book-info-pager").on("click", ".lend", function () {
-        BookManager.lendBook();
+    $("#book-detail-info").on("click", ".lend-the-book", function () {
+        BookManager.lendBook($(this));
     });
+
+    $(".close-and-refresh").on("click", function () {
+        BookManager.closeAndRefresh();
+    })
+
+    $("#apply-in-book").on("click", function () {
+        var bookCode = $("#bookCode").val();
+        var bookName = $("#bookName").val();
+        var type = $("#type").val();
+        var price = $("#price").val();
+        var author = $("#author").val();
+        var publishingHouse = $("#publishingHouse").val();
+        var num = $("#num").val();
+        var version = $("#version").val();
+        var applyInStaff = $("#applyInStaff").val();
+        var libraryRow = $("#libraryRow").val();
+        var libraryColumn = $("#libraryColumn").val();
+        var book = new Book(bookCode, bookName, type,
+            price, author, publishingHouse,
+            num, version, applyInStaff,
+            libraryRow, libraryColumn);
+        book.applyInStore();
+        BookManager.closeAndRefresh();
+    })
+
+    $("#search-books").on("click", function () {
+
+    })
+
+
 });
