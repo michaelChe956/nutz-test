@@ -178,7 +178,7 @@ $(function () {
         var param = {};
         param.bookCode = this.bookCode;
         param.bookName = this.bookName;
-        param.type = this.bookName;
+        param.type = this.type;
         param.author = this.author;
         $.ajax({
             url: searchBookInfoUrl,
