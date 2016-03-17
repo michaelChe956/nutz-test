@@ -193,7 +193,7 @@
                         <td>
                             <label>图书类别 :</label>
                             <select name="type" class="search-input">
-                                <option value="0">请选择</option>
+                                <option value="">请选择</option>
                                 <option value="1">小说</option>
                                 <option value="2">散文</option>
                                 <option value="3">漫画</option>

@@ -4,6 +4,7 @@ import com.test.nutzbook.bean.Book;
 import com.test.nutzbook.bean.User;
 import com.test.nutzbook.bean.enumerate.BookType;
 import com.test.nutzbook.common.RMap;
+import com.test.nutzbook.common.SqlStringBuilder;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
 import org.nutz.dao.FieldFilter;
@@ -76,10 +77,13 @@ public class bookManagerIndexModule extends BaseModule {
 
     @At
     public Object searchBookInfo(@Param("..") Book book) {
-        Condition condition =
-                Cnd.where("bookName", "like", book.getBookName())
-                        .and("bookCode", "=", book.getBookCode())
-                        .and("type", "=", book.getType()).and("author","=",book.getAuthor());
-        return new NutMap();
+        String sqlStr = new SqlStringBuilder()
+                .sqlUseLike("bookName", book.getBookName())
+                .sqlUseEqual("bookCode", book.getBookCode())
+                .sqlUseEqual("author", book.getAuthor())
+                .sqlUseEqual("type", book.getType() == 0 ? "" : book.getType() + "").build();
+        Condition condition = Cnd.wrap(sqlStr);
+        List<Book> bookList = dao.query(Book.class, condition);
+        return new NutMap().setv("bookInfo", bookList);
     }
 }

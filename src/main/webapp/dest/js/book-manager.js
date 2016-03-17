@@ -2,6 +2,10 @@ var data = {
     "bookList": bookList,
     "student": user
 }
+var bookInfoPage = new PAGER();
+pageObjArr.push(bookInfoPage);
+var readInfo = new PAGER();
+pageObjArr.push(readInfo);
 $(function () {
     //图书管理
     var BookManager = {
@@ -157,7 +161,10 @@ $(function () {
         },
         //按条件查询图书
         renderBookInfoByCondition: function () {
-
+            var condition = new Condition(($(".search-input")[0]).value,
+                $(".search-input")[1].value, $(".search-input")[2].value,
+                $(".search-input")[3].value);
+            condition.search();
         }
     }
 
@@ -168,6 +175,11 @@ $(function () {
         this.author = author;
     }
     Condition.prototype.search = function () {
+        var param = {};
+        param.bookCode = this.bookCode;
+        param.bookName = this.bookName;
+        param.type = this.bookName;
+        param.author = this.author;
         $.ajax({
             url: searchBookInfoUrl,
             type: "post",
@@ -175,7 +187,7 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 readInfo.initPager(1, data.bookInfo, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
-                    bookInfo, BookManager.checkBookCondition, 1);
+                    data.bookInfo, BookManager.checkBookCondition, 1);
             }
 
         })
@@ -255,12 +267,8 @@ $(function () {
 
     $(window).load(function () {
         var bookInfo = data.bookList;
-        var bookInfoPage = new PAGER();
-        pageObjArr.push(bookInfoPage);
         bookInfoPage.initPager(1, bookInfo.length, 10, 7, 'book-info-pager', 'book-info-pager-div',
             bookInfo, BookManager.getBookInfoData, 0);
-        var readInfo = new PAGER();
-        pageObjArr.push(readInfo);
         readInfo.initPager(1, bookInfo.length, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
             bookInfo, BookManager.checkBookCondition, 1);
         BookManager.setSelfInfo(data.student);
@@ -304,7 +312,7 @@ $(function () {
     })
 
     $("#search-books").on("click", function () {
-
+        BookManager.renderBookInfoByCondition();
     })
 
 
