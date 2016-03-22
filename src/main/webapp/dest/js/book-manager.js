@@ -57,7 +57,7 @@ $(function () {
                 if (dataId + 1 > finalData.length) {
                     break;
                 } else {
-                    dataSpace += '<tr>';
+                    dataSpace += '<tr> <input type="hidden" value="' + finalData[dataId].id + '" />';
                     dataSpace += '<td><p>' + finalData[dataId].bookCode + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].bookName + '</p></td>';
                     dataSpace += '<td><p>' + finalData[dataId].author + '</p></td>';
@@ -65,13 +65,13 @@ $(function () {
                     dataSpace += '<td><p>' + finalData[dataId].typeName + '</p></td>';
                     dataSpace += '<td><p class="text-success">' + finalData[dataId].num + '</p></td>';
                     if (finalData[dataId].canLend == 0) {
-                        dataSpace += '<td><button class="btn btn-primary" ' +
+                        dataSpace += '<td><button class="btn lend-book btn-primary" ' +
                             'data-toggle="modal"data-target="#lendModal">借书</button></td>';
                     } else {
                         dataSpace += '<td><button class="btn btn-primary" ' +
                             'data-toggle="modal"data-target="#lendModal" disabled="disabled">借书</button></td>';
                     }
-                    dataSpace += '<td><button class="btn btn-primary" ' +
+                    dataSpace += '<td><button class="btn return-book btn-primary" ' +
                         'data-toggle="modal"data-target="#returnModal">还书</button></td>';
                     dataSpace += '</tr>';
 
@@ -135,13 +135,17 @@ $(function () {
         },
         changeMyLinkInfo: function () {
         },
+        //锁定书本等待借出
         lendBook: function ($bookInfo) {
             var bookId =
                 $bookInfo.parent().parent().parent().parent().find("input").val();
             $.ajax({
                 type: "post",
                 url: lendBookUrl,
-                data: {bookId: bookId},
+                data: {
+                    bookId: bookId,
+                    lendType: false
+                },
                 dataType: "json",
                 success: function (data) {
                     var num = data.book.num;
@@ -165,6 +169,153 @@ $(function () {
                 $(".search-input")[1].value, $(".search-input")[2].value,
                 $(".search-input")[3].value);
             condition.search();
+        },
+        //进入借书处理弹出层
+        leadToLendBooks: function ($lendObj) {
+            var bookId = $lendObj.parent().parent().find("input").val();
+            $.ajax({
+                url: leadToLendBooksUrl,
+                type: "post",
+                data: {bookId: bookId},
+                dataType: "json",
+                success: function (data) {
+                    var book = data.book;
+                    var dataSpace = '<input name="bookId" type="hidden" value="' + book.id + '" />' + '<div class="row">' +
+                        '<form class="form-horizontal" role="form">' +
+                        '<div class="form-group col-sm-6">' +
+                        '<label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>' +
+                        '<div class="col-sm-8">' +
+                        '<input type="text" class="form-control" value="' + book.bookCode + '" disabled></div>' +
+                        '</div>' +
+                        '<div class="margin-left-minus-fifty form-group col-sm-6">' +
+                        '<label class="col-sm-4 control-label">借书证号</label>' +
+                        '<div class="col-sm-8"><input type="text" name="libraryCardNo" class="form-control" placeholder="借书证号"></div>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<form class="form-horizontal" role="form">' +
+                        '<div class="form-group col-sm-6">' +
+                        '<label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>' +
+                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="录入操作员"></div>' +
+                        '</div>' +
+                        '<div class="margin-left-minus-fifty form-group col-sm-6">' +
+                        '<label class="col-sm-4 control-label">录入时间</label>' +
+                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="默认当前时间"></div>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<form class="form-horizontal" role="form">' +
+                        '<div class="form-group col-sm-6">' +
+                        '<label class="margin-left-minus-fifty col-sm-4 control-label">锁定本数</label>' +
+                        '<div class="col-sm-8">' +
+                        '<input type="text" class="form-control" value="' + book.lockNum + '" disabled></div>' +
+                        '</div>' +
+                        '<div class="margin-left-minus-fifty form-group col-sm-6">' +
+                        '<label class="col-sm-4 control-label">归还日期</label>' +
+                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="归还日期"></div>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '<div align="center">' +
+                        '<button type="button" class="btn lock-book-lend btn-default">图书借出</button>' +
+                        '</div>';
+                    $("#lendModal").find(".modal-body").html(dataSpace);
+                }
+            });
+        },
+
+        leadToReturnBooks: function ($retObj) {
+            var bookId = $retObj.parent().parent().find("input").val();
+            $.ajax({
+                url: leadToLendBooksUrl,
+                type: "post",
+                data: {bookId: bookId},
+                dataType: "json",
+                success: function (data) {
+                    var book = data.book;
+                    var dataSpace = '<input name="bookId" type="hidden" value="' + book.id + '" />' + '<div class="row">' +
+                        '<form class="form-horizontal" role="form">' +
+                        '<div class="form-group col-sm-6">' +
+                        '<label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>' +
+                        '<div class="col-sm-8">' +
+                        '<input type="text" class="form-control" value="' + book.bookCode + '" disabled></div>' +
+                        '</div>' +
+                        '<div class="margin-left-minus-fifty form-group col-sm-6">' +
+                        '<label class="col-sm-4 control-label">借书证号</label>' +
+                        '<div class="col-sm-8"><input type="text" name="libraryCardNo" class="form-control" placeholder="借书证号"></div>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<form class="form-horizontal" role="form">' +
+                        '<div class="form-group col-sm-6">' +
+                        '<label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>' +
+                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="录入操作员"></div>' +
+                        '</div>' +
+                        '<div class="margin-left-minus-fifty form-group col-sm-6">' +
+                        '<label class="col-sm-4 control-label">录入时间</label>' +
+                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="默认当前时间"></div>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '<div class="row">' +
+                        '<form class="form-horizontal" role="form">' +
+                        '<div class="form-group col-sm-6">' +
+                        '<label class="margin-left-minus-fifty col-sm-4 control-label">锁定本数</label>' +
+                        '<div class="col-sm-8">' +
+                        '<input type="text" class="form-control" value="' + book.lockNum + '" disabled></div>' +
+                        '</div>' +
+                        '<div class="margin-left-minus-fifty form-group col-sm-6">' +
+                        '<label class="col-sm-4 control-label">归还日期</label>' +
+                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="归还日期"></div>' +
+                        '</div>' +
+                        '</form>' +
+                        '</div>' +
+                        '<div align="center">' +
+                        '<button type="button" class="btn lock-book-return btn-default">图书归还</button>' +
+                        '</div>';
+                    $("#returnModal").find(".modal-body").html(dataSpace);
+                }
+            })
+        },
+        //借出锁定书处理
+        lendLockBooks: function ($bookInfo) {
+            var bookId = $bookInfo.parent().parent().find("input[name='bookId']").val();
+            var libraryCardNo = $bookInfo.parent().parent().find("input[name='libraryCardNo']").val();
+            $.ajax({
+                type: "post",
+                url: lendBookUrl,
+                data: {
+                    bookId: bookId,
+                    lendType: true,
+                    libraryCardNo: libraryCardNo
+                },
+                dataType: "json",
+                success: function (data) {
+                    alert("借书成功");
+                }
+            });
+        },
+        //图书归还
+        returnLockBooks: function ($bookInfo) {
+            var bookId = $bookInfo.parent().parent().find("input[name='bookId']").val();
+            var libraryCardNo = $bookInfo.parent().parent().find("input[name='libraryCardNo']").val();
+            $.ajax({
+                type: "post",
+                url: returnBooksUrl,
+                data: {
+                    bookId: bookId,
+                    libraryCardNo: libraryCardNo
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.flag) {
+                        alert("还书成功");
+                    }
+                }
+            });
         }
     }
 
@@ -315,5 +466,21 @@ $(function () {
         BookManager.renderBookInfoByCondition();
     })
 
+    $("#book-read-info-pager").on("click", ".lend-book", function () {
+        BookManager.leadToLendBooks($(this));
+    })
+
+    $("#book-read-info-pager").on("click", ".return-book", function () {
+        BookManager.leadToReturnBooks($(this));
+    })
+
+
+    $("#lendModal").on("click", ".lock-book-lend", function () {
+        BookManager.lendLockBooks($(this));
+    })
+
+    $("#returnModal").on("click", ".lock-book-return", function () {
+        BookManager.returnLockBooks($(this));
+    })
 
 });

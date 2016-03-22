@@ -2,6 +2,7 @@ package com.test.nutzbook.module.bookManager;
 
 import com.test.nutzbook.bean.Book;
 import com.test.nutzbook.bean.User;
+import com.test.nutzbook.bean.UserBookRelation;
 import com.test.nutzbook.bean.enumerate.BookType;
 import com.test.nutzbook.common.RMap;
 import com.test.nutzbook.common.SqlConditionBuilder;
@@ -14,6 +15,10 @@ import org.nutz.json.Json;
 import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.filter.CheckSession;
+import org.nutz.trans.Atom;
+import org.nutz.trans.Trans;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -35,6 +40,8 @@ import java.util.List;
 @Filters(@By(type = CheckSession.class, args = {"me", "/SignIn/init"}))
 public class bookManagerIndexModule extends BaseModule {
 
+    Logger logger = LoggerFactory.getLogger(bookManagerIndexModule.class);
+
 
     @At("/init")
     @Ok("jsp:html.jsp.book-manager")
@@ -51,20 +58,58 @@ public class bookManagerIndexModule extends BaseModule {
     }
 
     @At
-    public Object lendBook(String bookId) {
+    public Object lendBook(String bookId, boolean lendType, int libraryCardNo) {
+        Condition userCondition = Cnd.where("libraryCardNo", "=", libraryCardNo);
+        User user =
+                Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(User.class, userCondition);
         Condition condition = Cnd.where("id", "=", bookId);
         Book book =
-                Daos.ext(dao, FieldFilter.create(User.class, null, "^password|id$", true)).fetch(Book.class, condition);
+                Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(Book.class, condition);
+        UserBookRelation userBookRelation = new UserBookRelation();
+        userBookRelation.setBookId(book.getId());
+        userBookRelation.setUserId(user.getId());
+        userBookRelation.setUserName(user.getName());
+        userBookRelation.setBookName(book.getBookName());
         if (1 == book.getNum()) {
             book.setCanLend(1);
         }
-        book.setNum(book.getNum() - 1);
+        if (lendType) {
+            book.setLockNum(book.getLockNum() - 1);
+            dao.insert(userBookRelation);
+        } else {
+            book.setNum(book.getNum() - 1);
+            book.setLockNum(book.getLockNum() + 1);
+
+        }
         dao.update(book);
         book =
-                Daos.ext(dao, FieldFilter.create(User.class, null, "^password|id$", true)).fetch(Book.class, condition);
+                Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(Book.class, condition);
         return new NutMap()
                 .setv("book", book);
     }
+
+    @At
+    public Object returnBooks(String bookId, int libraryCardNo) {
+        updateRetBooks(bookId, libraryCardNo);
+        return new NutMap().setv("flag", true);
+    }
+
+    private void updateRetBooks(final String bookId, final int libraryCardNo) {
+        Trans.exec(new Atom() {
+            public void run() {
+                Condition userCondition = Cnd.where("libraryCardNo", "=", libraryCardNo);
+                User user =
+                        Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(User.class, userCondition);
+                Condition bookCondition = Cnd.where("id", "=", bookId);
+                Book book = dao.fetch(Book.class, bookCondition);
+                book.setLockNum(book.getLockNum() - 1);
+                Condition userBookRelationCondition = Cnd.where("bookId", "=", bookId).and("userId", "=", user.getId());
+                dao.update(book);
+                int i = dao.clear(UserBookRelation.class, userBookRelationCondition);
+            }
+        });
+    }
+
 
     @At
     public Object bookApplyInStore(@Param("..") Book book) {
@@ -84,5 +129,20 @@ public class bookManagerIndexModule extends BaseModule {
                 .sqlUseEqual("type", book.getType() == 0 ? "" : book.getType() + "").build();
         List<Book> bookList = dao.query(Book.class, condition);
         return new NutMap().setv("bookInfo", bookList);
+    }
+
+    @At
+    public Object leadToLendBooks(String bookId) {
+        Book book = dao.fetch(Book.class, Cnd.where("id", "=", bookId));
+        return new NutMap().setv("book", book);
+    }
+
+
+    private Object changeToBoolean(int i) {
+        if (0 == i) {
+            return new NutMap().setv("flag", true);
+        } else {
+            return new NutMap().setv("flag", false);
+        }
     }
 }

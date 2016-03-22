@@ -31,6 +31,8 @@
         var lendBookUrl = "${base}/bookManager/lendBook";
         var bookApplyInStoreUrl = "${base}/bookManager/bookApplyInStore";
         var searchBookInfoUrl = "${base}/bookManager/searchBookInfo";
+        var leadToLendBooksUrl = "${base}/bookManager/leadToLendBooks";
+        var returnBooksUrl = "${base}/bookManager/returnBooks";
     </script>
     <script src="${base}/dest/js/book-manager.js"></script>
 </head>
@@ -340,57 +342,6 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入书籍编码">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">借书证号</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="借书证号">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入操作员">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">录入时间</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入操作员">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">录入时间</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-default">图书借出</button>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
@@ -417,57 +368,6 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入书籍编码">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">借书证号</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="借书证号">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入操作员">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">录入时间</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入操作员">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">录入时间</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div align="center">
-                    <button type="button" class="btn btn-default">图书借出</button>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"

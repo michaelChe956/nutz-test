@@ -35,6 +35,10 @@ public class Book {
 
     @Column
     private int num;
+
+    @Column
+    private int lockNum;
+
     @Column
     private int canLend;
     @Column
@@ -69,6 +73,7 @@ public class Book {
                 ", publishingHouse='" + publishingHouse + '\'' +
                 ", type=" + type +
                 ", num=" + num +
+                ", lockNum=" + lockNum +
                 ", canLend=" + canLend +
                 ", bookBriefIntroduction='" + bookBriefIntroduction + '\'' +
                 ", pages=" + pages +
@@ -215,5 +220,13 @@ public class Book {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getLockNum() {
+        return lockNum;
+    }
+
+    public void setLockNum(int lockNum) {
+        this.lockNum = lockNum;
     }
 }
