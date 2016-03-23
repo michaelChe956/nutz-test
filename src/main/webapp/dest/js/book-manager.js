@@ -298,6 +298,24 @@ $(function () {
                 }
             });
         },
+        lendBooksByCode: function ($bookInfo) {
+            var bookCode = $("#lend-book-code").val();
+            var libraryCardNo = $bookInfo.parent().parent().find("input[name='libraryCardNo']").val();
+            $.ajax({
+                type: "post",
+                url: lendBooksByCodeUrl,
+                data: {
+                    bookCode: bookCode,
+                    lendType: true,
+                    libraryCardNo: libraryCardNo
+                },
+                dataType: "json",
+                success: function (data) {
+                    alert("借书成功");
+                }
+            });
+
+        },
         //图书归还
         returnLockBooks: function ($bookInfo) {
             var bookId = $bookInfo.parent().parent().find("input[name='bookId']").val();
@@ -481,6 +499,10 @@ $(function () {
 
     $("#returnModal").on("click", ".lock-book-return", function () {
         BookManager.returnLockBooks($(this));
+    })
+
+    $("#lend-books-by-code").on("click", function () {
+        BookManager.lendBooksByCode($(this));
     })
 
 });

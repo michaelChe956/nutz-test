@@ -1,11 +1,16 @@
 package com.test.nutzbook.module.bookManager;
 
 import com.test.nutzbook.bean.Book;
+import com.test.nutzbook.bean.User;
 import com.test.nutzbook.bean.enumerate.BookType;
+import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
+import org.nutz.dao.FieldFilter;
+import org.nutz.dao.util.Daos;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -23,7 +28,7 @@ public class BaseModule {
     @Inject
     protected Dao dao;
 
-    public List<Book> getBookList(){
+    public List<Book> getBookList() {
         List<Book> bookList = dao.query(Book.class, null);
         for (Book book : bookList) {
             book.setTypeName(BookType.useBookType(book.getType()));
@@ -31,4 +36,8 @@ public class BaseModule {
         return bookList;
     }
 
+    public User getStaffInfo(HttpSession session) {
+        return Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true))
+                .fetch(User.class, Cnd.where("id", "=", (Integer) session.getAttribute("me")));
+    }
 }

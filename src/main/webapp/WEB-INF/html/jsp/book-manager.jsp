@@ -33,6 +33,7 @@
         var searchBookInfoUrl = "${base}/bookManager/searchBookInfo";
         var leadToLendBooksUrl = "${base}/bookManager/leadToLendBooks";
         var returnBooksUrl = "${base}/bookManager/returnBooks";
+        var lendBooksByCodeUrl = "${base}/bookManager/lendBooksByCode";
     </script>
     <script src="${base}/dest/js/book-manager.js"></script>
 </head>
@@ -207,7 +208,7 @@
                     <tr>
                         <td>
                             <label>书籍作者 :</label>
-                            <input class="search-input" type="text" />
+                            <input class="search-input" type="text"/>
                         </td>
                         <td colspan="2" align="center">
                             <button id="search-books" class="btn btn-primary">搜索书籍</button>
@@ -222,13 +223,13 @@
                         <div class="form-group col-sm-6">
                             <label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入书籍编码">
+                                <input type="text" id="lend-book-code" class="form-control" placeholder="录入书籍编码">
                             </div>
                         </div>
                         <div class="margin-left-minus-fifty form-group col-sm-6">
                             <label class="col-sm-4 control-label">借书证号</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="借书证号">
+                                <input type="text" name="libraryCardNo" class="form-control" placeholder="借书证号">
                             </div>
                         </div>
                     </form>
@@ -266,7 +267,7 @@
                     </form>
                 </div>
                 <div align="center">
-                    <button type="button" class="btn btn-default">图书借出</button>
+                    <button type="button" id="lend-books-by-code" class="btn btn-default">图书借出</button>
                 </div>
                 <hr>
             </div>

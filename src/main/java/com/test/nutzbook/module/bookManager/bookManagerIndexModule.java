@@ -58,56 +58,66 @@ public class bookManagerIndexModule extends BaseModule {
     }
 
     @At
-    public Object lendBook(String bookId, boolean lendType, int libraryCardNo) {
+    public Object lendBook(String bookId, boolean lendType, int libraryCardNo, HttpSession session) {
         Condition userCondition = Cnd.where("libraryCardNo", "=", libraryCardNo);
         User user =
                 Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(User.class, userCondition);
         Condition condition = Cnd.where("id", "=", bookId);
         Book book =
                 Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(Book.class, condition);
-        UserBookRelation userBookRelation = new UserBookRelation();
-        userBookRelation.setBookId(book.getId());
-        userBookRelation.setUserId(user.getId());
-        userBookRelation.setUserName(user.getName());
-        userBookRelation.setBookName(book.getBookName());
-        if (1 == book.getNum()) {
-            book.setCanLend(1);
-        }
-        if (lendType) {
-            book.setLockNum(book.getLockNum() - 1);
-            dao.insert(userBookRelation);
-        } else {
-            book.setNum(book.getNum() - 1);
-            book.setLockNum(book.getLockNum() + 1);
 
-        }
-        dao.update(book);
+        User staff = getStaffInfo(session);
+        doLendBookAction(lendType, user, book, staff);
+
         book =
                 Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(Book.class, condition);
+
         return new NutMap()
                 .setv("book", book);
     }
 
     @At
-    public Object returnBooks(String bookId, int libraryCardNo) {
-        updateRetBooks(bookId, libraryCardNo);
-        return new NutMap().setv("flag", true);
+    public Object lendBooksByCode(String bookCode, boolean lendType, @Param("..") User user, HttpSession session) {
+        Book book = dao.fetch(Book.class, Cnd.where("bookCode", "=", bookCode));
+        User staff = getStaffInfo(session);
+        doLendBookAction(lendType, user, book, staff);
+        return "";
     }
 
-    private void updateRetBooks(final String bookId, final int libraryCardNo) {
+    private void doLendBookAction(final boolean lendType, final User user, final Book book, final User staff) {
         Trans.exec(new Atom() {
             public void run() {
-                Condition userCondition = Cnd.where("libraryCardNo", "=", libraryCardNo);
-                User user =
-                        Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(User.class, userCondition);
-                Condition bookCondition = Cnd.where("id", "=", bookId);
-                Book book = dao.fetch(Book.class, bookCondition);
-                book.setLockNum(book.getLockNum() - 1);
-                Condition userBookRelationCondition = Cnd.where("bookId", "=", bookId).and("userId", "=", user.getId());
+                if (1 == book.getNum()) {
+                    book.setCanLend(1);
+                }
+                if (lendType) {
+                    book.setLockNum(book.getLockNum() - 1);
+                    UserBookRelation userBookRelation = new UserBookRelation();
+                    userBookRelation.setBookId(book.getId());
+                    userBookRelation.setUserId(user.getId());
+                    userBookRelation.setUserName(user.getName());
+                    userBookRelation.setBookName(book.getBookName());
+                    userBookRelation.setInUse(0);//inuse : 0 正在使用  1 失效
+                    userBookRelation.setOperatorId(staff.getId());
+                    userBookRelation.setOperatorName(staff.getUsername());
+                    dao.insert(userBookRelation);
+                } else {
+                    book.setNum(book.getNum() - 1);
+                    book.setLockNum(book.getLockNum() + 1);
+
+                }
                 dao.update(book);
-                int i = dao.clear(UserBookRelation.class, userBookRelationCondition);
             }
         });
+    }
+
+    @At
+    public Object returnBooks(String bookId, int libraryCardNo, HttpSession session) {
+        Condition userCondition = Cnd.where("libraryCardNo", "=", libraryCardNo);
+        Condition bookCondition = Cnd.where("id", "=", bookId);
+        User staff = getStaffInfo(session);
+        doRetBooks(bookId, userCondition, bookCondition, staff);
+        return new NutMap().setv("flag", true);
     }
 
 
@@ -144,5 +154,23 @@ public class bookManagerIndexModule extends BaseModule {
         } else {
             return new NutMap().setv("flag", false);
         }
+    }
+
+    private void doRetBooks(final String bookId, final Condition userCondition, final Condition bookCondition, final User staff) {
+        Trans.exec(new Atom() {
+            public void run() {
+                User user =
+                        Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(User.class, userCondition);
+                Book book = dao.fetch(Book.class, bookCondition);
+                book.setNum(book.getNum() + 1);
+                dao.update(book);
+                Condition userBookRelationCondition = Cnd.where("bookId", "=", bookId).and("userId", "=", user.getId());
+                UserBookRelation userBookRelation = dao.fetch(UserBookRelation.class, userBookRelationCondition);
+                userBookRelation.setOperatorId(staff.getId());
+                userBookRelation.setOperatorName(staff.getUsername());
+                userBookRelation.setInUse(1);
+                dao.update(userBookRelation);
+            }
+        });
     }
 }
