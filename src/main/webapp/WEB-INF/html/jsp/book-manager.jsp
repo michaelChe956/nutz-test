@@ -18,6 +18,7 @@
     <script src="${base}/dest/bootstrap/js/jquery-1.12.0.min.js"></script>
     <script src="${base}/dest/bootstrap/js/bootstrap.min.js"></script>
     <script src="${base}/dest/js/common/page.js"></script>
+    <script src="${base}/dest/js/common/common.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#myNav").affix({
@@ -34,6 +35,8 @@
         var leadToLendBooksUrl = "${base}/bookManager/leadToLendBooks";
         var returnBooksUrl = "${base}/bookManager/returnBooks";
         var lendBooksByCodeUrl = "${base}/bookManager/lendBooksByCode";
+        var returnBooksByCodeUrl = "${base}/bookManager/returnBooksByCode";
+        var sureToModifyUrl = "${base}/bookManager/sureToModify";
     </script>
     <script src="${base}/dest/js/book-manager.js"></script>
 </head>
@@ -58,6 +61,7 @@
                 <li class="checkInLendInfo"><a href="#section-4">查看读者借阅图书情况</a></li>
                 <li class="lendBook"><a href="#section-5">借书处理</a></li>
                 <li class="returnBook"><a href="#section-6">还书处理</a></li>
+                <li class="returnBook"><a href="#section-7">录入用户或管理员</a></li>
             </ul>
         </div>
         <div class="col-xs-9">
@@ -181,6 +185,26 @@
                 </div>
                 <hr>
             </div>
+            <div class="putInUser">
+                <h3 id="section-7">录入用户或管理员</h3>
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group col-sm-6">
+                            <label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="bookCode" placeholder="请输入书籍编码">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-4 control-label">书籍名称</label>
+                            <div class="col-sm-8">
+                                <input id="bookName" type="text" class="form-control" placeholder="请输入书籍名称">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <hr>
+            </div>
             <div class="checkInLendInfo">
                 <h2 id="section-4">查看读者借阅图书情况</h2>
                 <table class="table search-table">
@@ -278,13 +302,13 @@
                         <div class="form-group col-sm-6">
                             <label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入书籍编码">
+                                <input type="text" id="return-book-code" class="form-control" placeholder="录入书籍编码">
                             </div>
                         </div>
                         <div class="margin-left-minus-fifty form-group col-sm-6">
                             <label class="col-sm-4 control-label">借书证号</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="借书证号">
+                                <input type="text" name="libraryCardNo" class="form-control" placeholder="借书证号">
                             </div>
                         </div>
                     </form>
@@ -322,7 +346,7 @@
                     </form>
                 </div>
                 <div align="center">
-                    <button type="button" class="btn btn-default">图书借出</button>
+                    <button type="button" id="return-books-by-code" class="btn btn-default">图书归还</button>
                 </div>
             </div>
         </div>

@@ -57,6 +57,8 @@ public class User {
     @Column
     private String booksId;
 
+    private String booksName;
+
     @Column
     private String qq;
 
@@ -74,6 +76,8 @@ public class User {
     @Column("updateTime")
     private Date updateTime;
 
+    @Column
+    private int userType;
 
     public User() {
     }
@@ -85,18 +89,20 @@ public class User {
                 ", name='" + name + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", sex='" + sex + '\'' +
+                ", studentId='" + studentId + '\'' +
+                ", sex=" + sex +
                 ", libraryCardNo='" + libraryCardNo + '\'' +
-                ", classId='" + classId + '\'' +
-                ", studyState='" + studyState + '\'' +
+                ", classId=" + classId +
+                ", studyState=" + studyState +
                 ", telephone='" + telephone + '\'' +
                 ", anotherTphone='" + anotherTphone + '\'' +
                 ", email='" + email + '\'' +
                 ", booksId='" + booksId + '\'' +
-                ", studentId='" + studentId + '\'' +
+                ", booksName='" + booksName + '\'' +
                 ", qq='" + qq + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", userType=" + userType +
                 '}';
     }
 
@@ -218,5 +224,21 @@ public class User {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public String getBooksName() {
+        return booksName;
+    }
+
+    public void setBooksName(String booksName) {
+        this.booksName = booksName;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 }

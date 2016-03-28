@@ -34,11 +34,11 @@ $(function () {
                     dataSpace += '<td><p>' + finalData[dataId].typeName + '</p></td>';
                     dataSpace +=
                         finalData[dataId].canLend == 0 ? '<td><p class="text-success">可以借阅</p></td>'
-                            : '<td><p class="text-danger">已经借出去</p></td>';
+                            : '<td><p class="text-danger">已经借出去或锁定</p></td>';
                     dataSpace += '</tr>';
                 }
             }
-            dataSpace += '</table></div>'
+            dataSpace += '</table></div>';
             $("#book-info-pager-div").html(dataSpace);
         },
         //渲染查询书籍信息情况
@@ -89,6 +89,7 @@ $(function () {
             student.sex = student.sex == 0 ? '女' : '男';
             student.studyState = student.sex == 0 ? '在读' : '离校';
             var userInfo = '<table class="table table-bordered"><caption></caption><thead></thead><tbody><tr>' +
+                '<input id="user-id" type="hidden" value="' + student.id + '" />' +
                 '<td class="first-col">姓名</td> <td class="second-col">' + student.name +
                 '</td><td class="first-col">性别</td><td class="second-col">' + student.sex +
                 '</td></tr><tr></tr><tr><td>借书证</td><td>' + student.libraryCardNo +
@@ -96,15 +97,20 @@ $(function () {
                 '123456789</td></tr><tr><td>班级号</td><td>' + student.classId +
                 '</td><td>状态</td><td>' + student.studyState +
                 '</td></tr><tr><td colspan="4">联系方式（如联系方式有变动请及时修改，以便能及时联系到你。谢谢！）</td></tr>' +
-                '<tr><td>手机号码:</td><td>' + student.telephone +
-                '</td><td>第二联系号码:</td><td>' + student.telephone +
-                '</td></tr><tr><td>QQ:</td><td>' + student.qq +
-                '</td><td>电子邮箱:</td><td>' + student.email +
-                '</td></tr><tr><td colspan="5">所借阅的书籍:' + student.books +
+                '<tr><td>手机号码:</td><td><p class="need-to-display">' + student.telephone +
+                '</p><input class="search-input need-to-modify" maxlength="11" name="telephone" type="text" />' +
+                '</td><td>第二联系号码:</td><td><p class="need-to-display">' + student.anotherTphone +
+                '</p><input class="search-input need-to-modify" maxlength="11" name="anotherTphone" type="text" />' +
+                '</td></tr><tr><td>QQ:</td><td><p class="need-to-display">' + student.qq +
+                '</p><input class="search-input need-to-modify" name="qq" type="text" />' +
+                '</td><td>电子邮箱:</td><td><p class="need-to-display">' + student.email +
+                '</p><input class="search-input need-to-modify" name="email" type="text" />' +
+                '</td></tr><tr><td colspan="5">所借阅的书籍: ' + student.booksName +
                 '</td></tr><tr><td colspan="5"> <div align="center">' +
-                '<button type="button" class="btn">联系方式修改</button>' +
+                '<button type="button" id="modify-link" class="btn">联系方式修改</button>' +
                 '</div></td></tr></tbody></table>';
             $("#userInfo").html(userInfo);
+            UserLinkModel.showModel();
         },
         //展示书籍信息
         showBookDetailInfo: function (bookRow) {
@@ -122,16 +128,21 @@ $(function () {
                 '</td> </tr> <tr> <td rowspan="2"  class="info-brief">图书简介:</td> ' +
                 '<td rowspan="2" colspan="3">' + data.bookList[bookId].bookBriefIntroduction +
                 '</td> <tr></tr><tr> <td>数量:</td> <td>' + data.bookList[bookId].num +
-                '</td> <td class="text-success">可借阅</td> ' +
-                '<td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px">借阅</button> </td>' +
-                '</tr> </tr> </tbody> </table>';
+                '</td> <td class="text-success">可借阅</td> ';
+            if (0 == data.bookList[bookId].canLend) {
+                bookDetailInfo +=
+                    '<td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px">借阅</button> </td>'
+            } else {
+                bookDetailInfo +=
+                    '<td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px" disabled>借阅</button> </td>'
+            }
+            bookDetailInfo += '</tr> </tr> </tbody> </table>';
             $("#book-detail-info").find(".modal-body").html(bookDetailInfo);
             var num = data.bookList[bookId].num;
             if (0 >= num) {
                 $(".lend-the-book").parent().prev().text("已全部借出").removeClass("text-success").addClass('text-danger');
                 $(".lend-the-book").attr("disabled", "disabled");
             }
-
         },
         changeMyLinkInfo: function () {
         },
@@ -334,6 +345,24 @@ $(function () {
                     }
                 }
             });
+        },
+        returnBooksByCode: function ($bookInfo) {
+            var bookCode = $("#return-book-code").val();
+            var libraryCardNo = $bookInfo.parent().parent().find("input[name='libraryCardNo']").val();
+            $.ajax({
+                type: "post",
+                url: returnBooksByCodeUrl,
+                data: {
+                    bookCode: bookCode,
+                    libraryCardNo: libraryCardNo
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.flag) {
+                        alert("还书成功");
+                    }
+                }
+            });
         }
     }
 
@@ -373,17 +402,19 @@ $(function () {
         $(".checkInLendInfo").hide();
         $(".lendBook").hide();
         $(".returnBook").hide();
+        $(".putInUser").hide();
         this.checkUser();
     }
     AuthorityCheck.prototype.checkUser = function () {
         if (this.student.id <= 0) {
             $(".bookInfo").show();
-        } else if (this.student.id == 1) {
+        } else if (this.student.userType == 0) {
             $(".putInBook").show();
             $(".checkInLendInfo").show();
             $(".lendBook").show();
             $(".returnBook").show();
-        } else {
+            $(".putInUser").show();
+        } else if (this.student.userType == 1) {
             $(".personInfo").show();
             $(".bookInfo").show();
         }
@@ -431,6 +462,87 @@ $(function () {
                 }
             }
         })
+    }
+
+    var UserLink = function (id, telephone, anotherTphone, qq, email) {
+        this.id = id;
+        this.telephone = telephone;
+        this.anotherTphone = anotherTphone;
+        this.qq = qq;
+        this.email = email;
+    }
+    UserLink.prototype.checkIsNotEmpty = function () {
+        var mailRegularity = /\w@\w*\.\w/;
+        if ($.checkEmpty(this.telephone)) {
+            alert("电话号码不能为空");
+            return false;
+        } else if (this.telephone.length != 11) {
+            alert("电话号码格式不正确");
+            return false;
+        }
+        if ($.checkEmpty(this.anotherTphone)) {
+            alert("第二联系号码不能为空");
+            return false;
+        }
+        else if (this.anotherTphone.length != 11) {
+            alert("电话号码格式格式");
+            return false;
+        }
+        if ($.checkEmpty(this.qq)) {
+            alert("qq号码不能为空");
+            return false;
+        }
+        if ($.checkEmpty(this.email)) {
+            alert("邮箱号码不能为空");
+            return false;
+        } else if (!mailRegularity.test(this.email)) {
+            alert("邮箱格式不对");
+            return false;
+        }
+        return true;
+    }
+
+    var UserLinkModel = {
+        showModel: function () {
+            $(".need-to-modify").hide();
+            $(".need-to-display").show();
+            $("#modify-link").val("联系方式修改");
+            $("#modify-link").removeClass("sure-to-modify");
+        },
+        modifyModel: function () {
+            $(".need-to-modify").show();
+            $(".need-to-display").hide();
+            $("#modify-link").text("确认修改");
+            $("#modify-link").addClass("sure-to-modify");
+        },
+        sureToModify: function () {
+            var link = new UserLink(
+                $("#user-id").val(),
+                $("input[name='telephone']").val(),
+                $("input[name='anotherTphone']").val(),
+                $("input[name='qq']").val(),
+                $("input[name='email']").val());
+            if (!link.checkIsNotEmpty()) {
+                return;
+            }
+            var param = {};
+            param.id = link.id;
+            param.telephone = link.telephone;
+            param.anotherTphone = link.anotherTphone;
+            param.qq = link.qq;
+            param.email = link.email;
+
+            $.ajax({
+                url: sureToModifyUrl,
+                data: param,
+                dataType: "json",
+                success: function (data) {
+                    if (data.student) {
+                        BookManager.setSelfInfo(data.student);
+                    }
+                }
+            });
+        }
     }
 
 
@@ -504,5 +616,18 @@ $(function () {
     $("#lend-books-by-code").on("click", function () {
         BookManager.lendBooksByCode($(this));
     })
+
+    $("#return-books-by-code").on("click", function () {
+        BookManager.returnBooksByCode($(this));
+    })
+
+    $("#userInfo").on("click", "#modify-link", function () {
+        UserLinkModel.modifyModel();
+    })
+
+    $("#userInfo").on("click", ".sure-to-modify", function () {
+        UserLinkModel.sureToModify();
+    })
+
 
 });

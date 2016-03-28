@@ -42,6 +42,10 @@ public class bookManagerIndexModule extends BaseModule {
 
     Logger logger = LoggerFactory.getLogger(bookManagerIndexModule.class);
 
+    private static final int INUSE_USE = 0;//使用中
+
+    private static final int INUSE_RET = 1;//归还
+
 
     @At("/init")
     @Ok("jsp:html.jsp.book-manager")
@@ -54,6 +58,7 @@ public class bookManagerIndexModule extends BaseModule {
         for (Book book : bookList) {
             book.setTypeName(BookType.useBookType(book.getType() - 1));
         }
+        setAllBooksThatULend(user);
         return RMap.of("user", Json.toJson(user), "bookList", Json.toJson(bookList));
     }
 
@@ -84,39 +89,21 @@ public class bookManagerIndexModule extends BaseModule {
         return "";
     }
 
-    private void doLendBookAction(final boolean lendType, final User user, final Book book, final User staff) {
-        Trans.exec(new Atom() {
-            public void run() {
-                if (1 == book.getNum()) {
-                    book.setCanLend(1);
-                }
-                if (lendType) {
-                    book.setLockNum(book.getLockNum() - 1);
-                    UserBookRelation userBookRelation = new UserBookRelation();
-                    userBookRelation.setBookId(book.getId());
-                    userBookRelation.setUserId(user.getId());
-                    userBookRelation.setUserName(user.getName());
-                    userBookRelation.setBookName(book.getBookName());
-                    userBookRelation.setInUse(0);//inuse : 0 正在使用  1 失效
-                    userBookRelation.setOperatorId(staff.getId());
-                    userBookRelation.setOperatorName(staff.getUsername());
-                    dao.insert(userBookRelation);
-                } else {
-                    book.setNum(book.getNum() - 1);
-                    book.setLockNum(book.getLockNum() + 1);
-
-                }
-                dao.update(book);
-            }
-        });
-    }
-
     @At
     public Object returnBooks(String bookId, int libraryCardNo, HttpSession session) {
         Condition userCondition = Cnd.where("libraryCardNo", "=", libraryCardNo);
         Condition bookCondition = Cnd.where("id", "=", bookId);
         User staff = getStaffInfo(session);
-        doRetBooks(bookId, userCondition, bookCondition, staff);
+        doRetBooks(userCondition, bookCondition, staff);
+        return new NutMap().setv("flag", true);
+    }
+
+    @At
+    public Object returnBooksByCode(String bookCode, int libraryCardNo, HttpSession session) {
+        Condition userCondition = Cnd.where("libraryCardNo", "=", libraryCardNo);
+        Condition bookCondition = Cnd.where("bookCode", "=", bookCode);
+        User staff = getStaffInfo(session);
+        doRetBooks(userCondition, bookCondition, staff);
         return new NutMap().setv("flag", true);
     }
 
@@ -147,6 +134,18 @@ public class bookManagerIndexModule extends BaseModule {
         return new NutMap().setv("book", book);
     }
 
+    @At
+    public Object sureToModify(@Param("..") User user) {
+        User student = dao.fetch(User.class, user.getId());
+        student.setEmail(user.getEmail());
+        student.setQq(user.getQq());
+        student.setTelephone(user.getTelephone());
+        student.setAnotherTphone(user.getAnotherTphone());
+        dao.update(student);
+        setAllBooksThatULend(student);
+        return new NutMap().setv("student", student);
+    }
+
 
     private Object changeToBoolean(int i) {
         if (0 == i) {
@@ -156,7 +155,7 @@ public class bookManagerIndexModule extends BaseModule {
         }
     }
 
-    private void doRetBooks(final String bookId, final Condition userCondition, final Condition bookCondition, final User staff) {
+    private void doRetBooks(final Condition userCondition, final Condition bookCondition, final User staff) {
         Trans.exec(new Atom() {
             public void run() {
                 User user =
@@ -164,13 +163,51 @@ public class bookManagerIndexModule extends BaseModule {
                 Book book = dao.fetch(Book.class, bookCondition);
                 book.setNum(book.getNum() + 1);
                 dao.update(book);
-                Condition userBookRelationCondition = Cnd.where("bookId", "=", bookId).and("userId", "=", user.getId());
+                Condition userBookRelationCondition = Cnd.where("bookId", "=", book.getId()).and("userId", "=", user.getId());
                 UserBookRelation userBookRelation = dao.fetch(UserBookRelation.class, userBookRelationCondition);
                 userBookRelation.setOperatorId(staff.getId());
                 userBookRelation.setOperatorName(staff.getUsername());
-                userBookRelation.setInUse(1);
+                userBookRelation.setInUse(INUSE_RET);
                 dao.update(userBookRelation);
             }
         });
+    }
+
+    private void doLendBookAction(final boolean lendType, final User user, final Book book, final User staff) {
+        Trans.exec(new Atom() {
+            public void run() {
+                if (1 == book.getNum()) {
+                    book.setCanLend(1);
+                }
+                if (lendType) {
+                    book.setLockNum(book.getLockNum() - 1);
+                    UserBookRelation userBookRelation = new UserBookRelation();
+                    userBookRelation.setBookId(book.getId());
+                    userBookRelation.setUserId(user.getId());
+                    userBookRelation.setUserName(user.getName());
+                    userBookRelation.setBookName(book.getBookName());
+                    userBookRelation.setInUse(INUSE_USE);//inuse : 0 正在使用  1 失效
+                    userBookRelation.setOperatorId(staff.getId());
+                    userBookRelation.setOperatorName(staff.getUsername());
+                    dao.insert(userBookRelation);
+                } else {
+                    book.setNum(book.getNum() - 1);
+                    book.setLockNum(book.getLockNum() + 1);
+
+                }
+                dao.update(book);
+            }
+        });
+    }
+
+    private void setAllBooksThatULend(User user) {
+        Condition userCondition = Cnd.where("userId", "=", user.getId()).and("inUse", "=", INUSE_USE);
+        List<UserBookRelation> userBookRelationList =
+                dao.query(UserBookRelation.class, userCondition);
+        String booksName = "";
+        for (UserBookRelation u : userBookRelationList) {
+            booksName += u.getBookName() + ";";
+        }
+        user.setBooksName(booksName);
     }
 }

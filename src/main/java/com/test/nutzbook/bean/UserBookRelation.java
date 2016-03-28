@@ -28,7 +28,7 @@ public class UserBookRelation {
     @Column
     private String bookName;
     @Column
-    private int inUse;
+    private int inUse;// 0 : 借书关系   1 : 还书关系
 
     @Column("createTime")
     private Date createTime;
