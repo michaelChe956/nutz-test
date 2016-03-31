@@ -158,7 +158,7 @@ $(function () {
                     lendType: false
                 },
                 dataType: "json",
-                success: function (data) {
+                success: function (data, Status) {
                     var num = data.book.num;
                     if (0 >= num) {
                         $bookInfo.parent().prev().text("已全部借出").removeClass("text-success").addClass('text-danger');
@@ -174,12 +174,19 @@ $(function () {
         closeAndRefresh: function () {
             window.location.reload();
         },
-        //按条件查询图书
+        //按条件查询图书 管理员使用
         renderBookInfoByCondition: function () {
-            var condition = new Condition(($(".search-input")[0]).value,
-                $(".search-input")[1].value, $(".search-input")[2].value,
-                $(".search-input")[3].value);
+            var condition = new Condition(($(".search-input-book-condition")[0]).value,
+                $(".search-input-book-condition")[1].value, $(".search-input-book-condition")[2].value,
+                $(".search-input-book-condition")[3].value);
             condition.search();
+        },
+        //按条件查询图书用户使用
+        renderBookInfoByConditionUser: function () {
+            var condition = new Condition(($(".search-input-bookinfo")[0]).value,
+                $(".search-input-bookinfo")[1].value, $(".search-input-bookinfo")[2].value,
+                $(".search-input-bookinfo")[3].value);
+            condition.searchBookInfo();
         },
         //进入借书处理弹出层
         leadToLendBooks: function ($lendObj) {
@@ -384,10 +391,27 @@ $(function () {
             data: param,
             dataType: "json",
             success: function (data) {
-                readInfo.initPager(1, data.bookInfo, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
+                readInfo.initPager(1, data.bookInfo.length, 10, 7, 'book-read-info-pager', 'book-read-info-pager-div',
                     data.bookInfo, BookManager.checkBookCondition, 1);
             }
+        })
+    }
 
+    Condition.prototype.searchBookInfo = function () {
+        var param = {};
+        param.bookCode = this.bookCode;
+        param.bookName = this.bookName;
+        param.type = this.type;
+        param.author = this.author;
+        $.ajax({
+            url: searchBookInfoUrl,
+            type: "post",
+            data: param,
+            dataType: "json",
+            success: function (data) {
+                bookInfoPage.initPager(1, data.bookInfo.length, 10, 7, 'book-info-pager', 'book-info-pager-div',
+                    data.bookInfo, BookManager.getBookInfoData, 0);
+            }
         })
     }
 
@@ -545,6 +569,29 @@ $(function () {
         }
     }
 
+    var registerUser = function (username, password, name, sex, studyNum, classId, userType) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.sex = sex;
+        this.studyNum = studyNum;
+        this.classId = classId;
+        this.userType = userType;
+    }
+    registerUser.prototype.register = function () {
+        
+    }
+
+    registerUser.prototype.param = function () {
+        return {
+            name: this.name,
+            sex: this.sex,
+            studyNum: this.studyNum,
+            classId: this.classId,
+            userType: this.userType
+        };
+    }
+
 
     $(window).load(function () {
         var bookInfo = data.bookList;
@@ -596,6 +643,11 @@ $(function () {
         BookManager.renderBookInfoByCondition();
     })
 
+
+    $("#search-books-info").on("click", function () {
+        BookManager.renderBookInfoByConditionUser();
+    })
+
     $("#book-read-info-pager").on("click", ".lend-book", function () {
         BookManager.leadToLendBooks($(this));
     })
@@ -628,6 +680,13 @@ $(function () {
     $("#userInfo").on("click", ".sure-to-modify", function () {
         UserLinkModel.sureToModify();
     })
+
+    $(".pick-time").datetimepicker({
+        format: "dd MM yyyy - hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+    });
 
 
 });

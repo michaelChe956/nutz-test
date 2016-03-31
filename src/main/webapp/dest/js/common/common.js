@@ -7,4 +7,16 @@
             return false;
         }
     }
+    $.failAlertAjax = function (param) {
+        $.ajax({
+            url: param.url,
+            type: param.type,
+            data: param.data,
+            dataType: param.dataType,
+            success: param.success,
+            fail: function () {
+                alert("you need to sign in");
+            }
+        })
+    }
 })($)

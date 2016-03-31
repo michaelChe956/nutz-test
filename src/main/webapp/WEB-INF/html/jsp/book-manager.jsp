@@ -15,10 +15,13 @@
     <link rel="stylesheet" type="text/css" href="${base}/dest/bootstrap/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="${base}/dest/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="${base}/dest/bootstrap/css/book-manager.css"/>
+    <link rel="stylesheet" type="text/css" href="${base}/dest/bootstrap-datapicker/css/bootstrap-datetimepicker.css"/>
     <script src="${base}/dest/bootstrap/js/jquery-1.12.0.min.js"></script>
     <script src="${base}/dest/bootstrap/js/bootstrap.min.js"></script>
     <script src="${base}/dest/js/common/page.js"></script>
     <script src="${base}/dest/js/common/common.js"></script>
+    <script src="${base}/dest/js/common/common.js"></script>
+    <script src="${base}/dest/bootstrap-datapicker/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#myNav").affix({
@@ -73,6 +76,38 @@
             </div>
             <div class="bookInfo">
                 <h2 id="section-2">图书信息</h2>
+                <table class="table search-table">
+                    <tr>
+                        <td>
+                            <label>书籍编码 :</label>
+                            <input class="search-input-bookinfo" type="text"/>
+                        </td>
+                        <td>
+                            <label>书籍名称 :</label>
+                            <input class="search-input-bookinfo" type="text"/>
+                        </td>
+                        <td>
+                            <label>图书类别 :</label>
+                            <select name="type" class="search-input-bookinfo">
+                                <option value="">请选择</option>
+                                <option value="1">小说</option>
+                                <option value="2">散文</option>
+                                <option value="3">漫画</option>
+                                <option value="4">技术类</option>
+                                <option value="5">人文类</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>书籍作者 :</label>
+                            <input class="search-input-bookinfo" type="text"/>
+                        </td>
+                        <td colspan="2" align="center">
+                            <button id="search-books-info" class="btn btn-primary">搜索书籍</button>
+                        </td>
+                    </tr>
+                </table>
                 <div id="book-info-pager"></div>
                 <hr>
             </div>
@@ -159,7 +194,7 @@
                         <div class="margin-left-minus-fifty form-group col-sm-6">
                             <label class="col-sm-4 control-label">录入时间</label>
                             <div class="col-sm-8">
-                                <input type="text" id="time" class="form-control" placeholder="录入时间">
+                                <input size="16" class="form-control pick-time" type="text" value="" readonly>
                             </div>
                         </div>
                     </form>
@@ -185,41 +220,21 @@
                 </div>
                 <hr>
             </div>
-            <div class="putInUser">
-                <h3 id="section-7">录入用户或管理员</h3>
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">书籍编码</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="bookCode" placeholder="请输入书籍编码">
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label class="col-sm-4 control-label">书籍名称</label>
-                            <div class="col-sm-8">
-                                <input id="bookName" type="text" class="form-control" placeholder="请输入书籍名称">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <hr>
-            </div>
             <div class="checkInLendInfo">
                 <h2 id="section-4">查看读者借阅图书情况</h2>
                 <table class="table search-table">
                     <tr>
                         <td>
                             <label>书籍编码 :</label>
-                            <input class="search-input" type="text"/>
+                            <input class="search-input-book-condition" type="text"/>
                         </td>
                         <td>
                             <label>书籍名称 :</label>
-                            <input class="search-input" type="text"/>
+                            <input class="search-input-book-condition" type="text"/>
                         </td>
                         <td>
                             <label>图书类别 :</label>
-                            <select name="type" class="search-input">
+                            <select name="type" class="search-input-book-condition">
                                 <option value="">请选择</option>
                                 <option value="1">小说</option>
                                 <option value="2">散文</option>
@@ -232,7 +247,7 @@
                     <tr>
                         <td>
                             <label>书籍作者 :</label>
-                            <input class="search-input" type="text"/>
+                            <input class="search-input-book-condition" type="text"/>
                         </td>
                         <td colspan="2" align="center">
                             <button id="search-books" class="btn btn-primary">搜索书籍</button>
@@ -269,7 +284,8 @@
                         <div class="margin-left-minus-fifty form-group col-sm-6">
                             <label class="col-sm-4 control-label">录入时间</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
+                                <input id="datetimepicker-test" type="text" class="form-control pick-time"
+                                       placeholder="" readonly>
                             </div>
                         </div>
                     </form>
@@ -285,7 +301,7 @@
                         <div class="margin-left-minus-fifty form-group col-sm-6">
                             <label class="col-sm-4 control-label">录入时间</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
+                                <input type="text" class="form-control pick-time" placeholder="" readonly>
                             </div>
                         </div>
                     </form>
@@ -324,7 +340,7 @@
                         <div class="margin-left-minus-fifty form-group col-sm-6">
                             <label class="col-sm-4 control-label">录入时间</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
+                                <input type="text" class="form-control pick-time" placeholder="" readonly>
                             </div>
                         </div>
                     </form>
@@ -340,7 +356,7 @@
                         <div class="margin-left-minus-fifty form-group col-sm-6">
                             <label class="col-sm-4 control-label">录入时间</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入时间">
+                                <input type="text" class="form-control pick-time" placeholder="" readonly>
                             </div>
                         </div>
                     </form>
@@ -348,6 +364,78 @@
                 <div align="center">
                     <button type="button" id="return-books-by-code" class="btn btn-default">图书归还</button>
                 </div>
+                <hr>
+            </div>
+            <div class="putInUser">
+                <h3 id="section-7">录入用户或管理员</h3>
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group col-sm-6">
+                            <label class="margin-left-minus-fifty col-sm-4 control-label">用户名:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="register-username" placeholder="请输入书籍编码">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-4 control-label">密&nbsp;码:</label>
+                            <div class="col-sm-8">
+                                <input id="register-password" type="password" class="form-control"
+                                       placeholder="请输入书籍名称">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group col-sm-6">
+                            <label class="margin-left-minus-fifty col-sm-4 control-label">姓&nbsp;名:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="register-name" placeholder="请输入书籍编码">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-4 control-label">性&nbsp;别:</label>
+                            <div class="col-sm-8">
+                                <input id="register-sex" type="password" class="form-control" placeholder="请输入书籍名称">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group col-sm-6">
+                            <label class="margin-left-minus-fifty col-sm-4 control-label">学&nbsp;号:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="register-study-num" placeholder="请输入书籍编码">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-sm-4 control-label">班级号:</label>
+                            <div class="col-sm-8">
+                                <input id="register-class-id" type="password" class="form-control"
+                                       placeholder="请输入书籍名称">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group col-sm-6">
+                            <label class="margin-left-minus-fifty col-sm-4 control-label">用户类型:</label>
+                            <div class="col-sm-8">
+                                <select name="type" class="search-input-bookinfo">
+                                    <option value="">请选择</option>
+                                    <option value="1">用户</option>
+                                    <option value="2">管理员</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div align="center">
+                    <button type="button" id="sign-up-user-admin" class="btn btn-default">录入用户/管理员</button>
+                </div>
+                <hr>
             </div>
         </div>
     </div>
@@ -433,6 +521,7 @@
         </div>
     </div>
 </div>
+
 
 </body>
 </html>

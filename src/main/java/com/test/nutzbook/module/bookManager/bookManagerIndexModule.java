@@ -55,12 +55,11 @@ public class bookManagerIndexModule extends BaseModule {
         User user =
                 Daos.ext(dao, FieldFilter.create(User.class, null, "^password", true)).fetch(User.class, condition);
         List<Book> bookList = dao.query(Book.class, null);
-        for (Book book : bookList) {
-            book.setTypeName(BookType.useBookType(book.getType() - 1));
-        }
+        changeTypeToTypeName(bookList);
         setAllBooksThatULend(user);
         return RMap.of("user", Json.toJson(user), "bookList", Json.toJson(bookList));
     }
+
 
     @At
     public Object lendBook(String bookId, boolean lendType, int libraryCardNo, HttpSession session) {
@@ -118,6 +117,7 @@ public class bookManagerIndexModule extends BaseModule {
     }
 
     @At
+    @Filters()
     public Object searchBookInfo(@Param("..") Book book) {
         Condition condition = new SqlConditionBuilder()
                 .sqlUseLike("bookName", book.getBookName())
@@ -125,6 +125,7 @@ public class bookManagerIndexModule extends BaseModule {
                 .sqlUseEqual("author", book.getAuthor())
                 .sqlUseEqual("type", book.getType() == 0 ? "" : book.getType() + "").build();
         List<Book> bookList = dao.query(Book.class, condition);
+        changeTypeToTypeName(bookList);
         return new NutMap().setv("bookInfo", bookList);
     }
 
@@ -209,5 +210,12 @@ public class bookManagerIndexModule extends BaseModule {
             booksName += u.getBookName() + ";";
         }
         user.setBooksName(booksName);
+    }
+
+
+    private void changeTypeToTypeName(List<Book> bookList) {
+        for (Book book : bookList) {
+            book.setTypeName(BookType.useBookType(book.getType() - 1));
+        }
     }
 }

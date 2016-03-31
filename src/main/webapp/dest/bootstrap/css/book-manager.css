@@ -1,70 +1,109 @@
 /* Custom Styles */
 ul.nav-tabs {
-  width: 140px;
-  margin-top: 20px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067); }
+    width: 140px;
+    margin-top: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+}
 
 ul.nav-tabs li {
-  margin: 0;
-  border-top: 1px solid #ddd; }
+    margin: 0;
+    border-top: 1px solid #ddd;
+}
 
 ul.nav-tabs li:first-child {
-  border-top: none; }
+    border-top: none;
+}
 
 ul.nav-tabs li a {
-  margin: 0;
-  padding: 8px 16px;
-  border-radius: 0; }
+    margin: 0;
+    padding: 8px 16px;
+    border-radius: 0;
+}
 
 ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover {
-  color: #fff;
-  background: #0088cc;
-  border: 1px solid #0088cc; }
+    color: #fff;
+    background: #0088cc;
+    border: 1px solid #0088cc;
+}
 
 ul.nav-tabs li:first-child a {
-  border-radius: 4px 4px 0 0; }
+    border-radius: 4px 4px 0 0;
+}
 
 ul.nav-tabs li:last-child a {
-  border-radius: 0 0 4px 4px; }
+    border-radius: 0 0 4px 4px;
+}
 
 ul.nav-tabs.affix {
-  top: 30px;
-  /* Set the top position of pinned element */ }
+    top: 30px;
+    /* Set the top position of pinned element */
+}
 
 .margin-top-minus-fifth {
-  margin-top: -15px; }
+    margin-top: -15px;
+}
 
 .margin-left-minus-fifty {
-  margin-left: -50px; }
+    margin-left: -50px;
+}
 
 .my-modal-width {
-  width: 1000px; }
+    width: 1000px;
+}
 
 .my-modal-for-book-info {
-  width: 700px; }
+    width: 700px;
+}
 
 .book-info-width {
-  width: 25%; }
+    width: 25%;
+}
 
 .info-brief {
-  width: 25%; }
-
-.search-input{
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857;
-  color: #555555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    width: 25%;
 }
-.search-table td{
-  padding: 8px;
-  line-height: 1.42857;
-  vertical-align: top;
-  border: 0 !important;
+
+.search-input {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-input-bookinfo {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-input-book-condition{
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-table td {
+    padding: 8px;
+    line-height: 1.42857;
+    vertical-align: top;
+    border: 0 !important;
 }
