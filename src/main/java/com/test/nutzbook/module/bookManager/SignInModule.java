@@ -1,6 +1,7 @@
 package com.test.nutzbook.module.bookManager;
 
 import com.test.nutzbook.bean.Book;
+import com.test.nutzbook.bean.LibraryCardNoSequence;
 import com.test.nutzbook.bean.User;
 import org.nutz.dao.Cnd;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -55,6 +56,14 @@ public class SignInModule extends BaseModule {
             session.setAttribute("me", user.getId());
             return true;
         }
+    }
+
+    @At
+    public Object register(@Param("..") User user){
+        LibraryCardNoSequence libraryCardNoSequence = dao.fetch(LibraryCardNoSequence.class,"libraryCardNo");
+        user.setLibraryCardNo(libraryCardNoSequence.getCurrentVal());
+        dao.insert(user);
+        return new NutMap().setv("flag",true);
     }
 
 

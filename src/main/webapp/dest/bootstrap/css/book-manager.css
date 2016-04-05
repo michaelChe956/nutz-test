@@ -107,3 +107,15 @@ ul.nav-tabs.affix {
     vertical-align: top;
     border: 0 !important;
 }
+.coverDiv{
+    display: none;
+    position: fixed;
+    _position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100001;
+    width: 100%;
+    background: #000;
+    border: 0;
+    opacity: 0.15;
+}

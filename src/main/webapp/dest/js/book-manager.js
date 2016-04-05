@@ -94,7 +94,7 @@ $(function () {
                 '</td><td class="first-col">性别</td><td class="second-col">' + student.sex +
                 '</td></tr><tr></tr><tr><td>借书证</td><td>' + student.libraryCardNo +
                 '</td><td>学号</td><td>' + student.studentId +
-                '123456789</td></tr><tr><td>班级号</td><td>' + student.classId +
+                '</td></tr><tr><td>班级号</td><td>' + student.classId +
                 '</td><td>状态</td><td>' + student.studyState +
                 '</td></tr><tr><td colspan="4">联系方式（如联系方式有变动请及时修改，以便能及时联系到你。谢谢！）</td></tr>' +
                 '<tr><td>手机号码:</td><td><p class="need-to-display">' + student.telephone +
@@ -219,7 +219,7 @@ $(function () {
                         '</div>' +
                         '<div class="margin-left-minus-fifty form-group col-sm-6">' +
                         '<label class="col-sm-4 control-label">录入时间</label>' +
-                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="默认当前时间"></div>' +
+                        '<div class="col-sm-8"><input type="text" class="pick-time form-control" placeholder="默认当前时间" readonly></div>' +
                         '</div>' +
                         '</form>' +
                         '</div>' +
@@ -232,7 +232,7 @@ $(function () {
                         '</div>' +
                         '<div class="margin-left-minus-fifty form-group col-sm-6">' +
                         '<label class="col-sm-4 control-label">归还日期</label>' +
-                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="归还日期"></div>' +
+                        '<div class="col-sm-8"><input type="text" class="pick-time form-control" placeholder="归还日期" readonly></div>' +
                         '</div>' +
                         '</form>' +
                         '</div>' +
@@ -274,7 +274,7 @@ $(function () {
                         '</div>' +
                         '<div class="margin-left-minus-fifty form-group col-sm-6">' +
                         '<label class="col-sm-4 control-label">录入时间</label>' +
-                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="默认当前时间"></div>' +
+                        '<div class="col-sm-8"><input type="text" class="pick-time form-control" placeholder="默认当前时间" readonly></div>' +
                         '</div>' +
                         '</form>' +
                         '</div>' +
@@ -287,7 +287,7 @@ $(function () {
                         '</div>' +
                         '<div class="margin-left-minus-fifty form-group col-sm-6">' +
                         '<label class="col-sm-4 control-label">归还日期</label>' +
-                        '<div class="col-sm-8"><input type="text" class="form-control" placeholder="归还日期"></div>' +
+                        '<div class="col-sm-8"><input type="text" class="pick-time form-control" placeholder="归还日期" readonly></div>' +
                         '</div>' +
                         '</form>' +
                         '</div>' +
@@ -312,7 +312,7 @@ $(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                    alert("借书成功");
+                    swal("Good job!","借书成功","success");
                 }
             });
         },
@@ -329,7 +329,7 @@ $(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                    alert("借书成功");
+                    swal("Good job!","借书成功","success");
                 }
             });
 
@@ -348,7 +348,7 @@ $(function () {
                 dataType: "json",
                 success: function (data) {
                     if (data.flag) {
-                        alert("还书成功");
+                        sweetAlert("Good job!","还书成功","success");
                     }
                 }
             });
@@ -366,7 +366,7 @@ $(function () {
                 dataType: "json",
                 success: function (data) {
                     if (data.flag) {
-                        alert("还书成功");
+                        sweetAlert("Good job!","还书成功","success");
                     }
                 }
             });
@@ -396,7 +396,6 @@ $(function () {
             }
         })
     }
-
     Condition.prototype.searchBookInfo = function () {
         var param = {};
         param.bookCode = this.bookCode;
@@ -482,7 +481,7 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 if (data) {
-                    alert("插入成功");
+                    sweetAlert("Good job!","插入成功","success");
                 }
             }
         })
@@ -498,29 +497,29 @@ $(function () {
     UserLink.prototype.checkIsNotEmpty = function () {
         var mailRegularity = /\w@\w*\.\w/;
         if ($.checkEmpty(this.telephone)) {
-            alert("电话号码不能为空");
+            sweetAlert("Oops...","电话号码不能为空","error");
             return false;
         } else if (this.telephone.length != 11) {
-            alert("电话号码格式不正确");
+            sweetAlert("Oops...","电话号码格式不正确","error");
             return false;
         }
         if ($.checkEmpty(this.anotherTphone)) {
-            alert("第二联系号码不能为空");
+            sweetAlert("Oops...","第二联系号码不能为空","error");
             return false;
         }
         else if (this.anotherTphone.length != 11) {
-            alert("电话号码格式格式");
+            sweetAlert("Oops...","电话号码格式格式","error");
             return false;
         }
         if ($.checkEmpty(this.qq)) {
-            alert("qq号码不能为空");
+            sweetAlert("Oops...","qq号码不能为空","error");
             return false;
         }
         if ($.checkEmpty(this.email)) {
-            alert("邮箱号码不能为空");
+            sweetAlert("Oops...","邮箱号码不能为空","error");
             return false;
         } else if (!mailRegularity.test(this.email)) {
-            alert("邮箱格式不对");
+            sweetAlert("Oops...","邮箱格式不对","error");
             return false;
         }
         return true;
@@ -569,7 +568,7 @@ $(function () {
         }
     }
 
-    var registerUser = function (username, password, name, sex, studyNum, classId, userType) {
+    var RegisterUser = function (username, password, name, sex, studyNum, classId, userType) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -578,18 +577,81 @@ $(function () {
         this.classId = classId;
         this.userType = userType;
     }
-    registerUser.prototype.register = function () {
-        
+
+    RegisterUser.prototype.checkIsNotEmpty = function () {
+        if ($.checkEmpty(this.userType)) {
+            sweetAlert("Oops...","请选择用户类型","error");
+            return false;
+        }
+        if (this.userType == 0) {
+            if ($.checkEmpty(this.username)) {
+                sweetAlert("Oops...","用户名不能为空","error");
+                return false;
+            }
+            if ($.checkEmpty(this.password)) {
+                sweetAlert("Oops...","密码不能为空","error");
+                return false;
+            }
+            if ($.checkEmpty(this.name)) {
+                sweetAlert("Oops...","姓名不能为空","error");
+                return false;
+            }
+        } else if (this.userType == 1) {
+            if ($.checkEmpty(this.username)) {
+                sweetAlert("Oops...","用户名不能为空","error");
+                return false;
+            }
+            if ($.checkEmpty(this.password)) {
+                sweetAlert("Oops...","密码不能为空","error");
+                return false;
+            } else if (this.password.length < 6) {
+                sweetAlert("Oops...","密码最少6位","error");
+                return false;
+            }
+            if ($.checkEmpty(this.name)) {
+                sweetAlert("Oops...","姓名不能为空","error");
+                return false;
+            }
+            if ($.checkEmpty(this.sex)) {
+                sweetAlert("Oops...","请选择性别","error");
+                return false;
+            }
+            if ($.checkEmpty(this.studyNum)) {
+                sweetAlert("Oops...","学号不能为空","error");
+                return false;
+            }
+            if ($.checkEmpty(this.classId)) {
+                sweetAlert("Oops...","班级号不能为空","error");
+                return false;
+            }
+        }
+        return true;
     }
 
-    registerUser.prototype.param = function () {
-        return {
+
+    RegisterUser.prototype.register = function () {
+        var param = {
+            username: this.username,
+            password: this.password,
             name: this.name,
             sex: this.sex,
-            studyNum: this.studyNum,
+            studentId: this.studyNum,
             classId: this.classId,
             userType: this.userType
         };
+        $.ajax({
+            url: registerUrl,
+            type: "post",
+            data: param,
+            dataType: "json",
+            success: function (data) {
+                if (data.flag) {
+                    sweetAlert("Oops...","录入成功","success");
+                }
+            }
+        })
+
+
     }
 
 
@@ -639,6 +701,7 @@ $(function () {
         BookManager.closeAndRefresh();
     })
 
+
     $("#search-books").on("click", function () {
         BookManager.renderBookInfoByCondition();
     })
@@ -681,12 +744,22 @@ $(function () {
         UserLinkModel.sureToModify();
     })
 
-    $(".pick-time").datetimepicker({
-        format: "dd MM yyyy - hh:ii",
-        autoclose: true,
-        todayBtn: true,
-        pickerPosition: "bottom-left"
+    $("body").delegate(".pick-time", "focusin", function () {
+        $(this).datetimepicker({
+            format: "dd MM yyyy - hh:ii",
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: "bottom-left"
+        });
+    })
+
+
+    $("#sign-up-user-admin").on("click", function () {
+        var registerIn = new RegisterUser($("#register-username").val(), $("#register-password").val(),
+            $("#register-name").val(), $("#register-sex").val(), $("#register-study-num").val(),
+            $("#register-class-id").val(), $("#register-user-type").val());
+        if (registerIn.checkIsNotEmpty()) {
+            registerIn.register();
+        }
     });
-
-
 });

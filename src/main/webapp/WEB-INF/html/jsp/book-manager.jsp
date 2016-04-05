@@ -22,6 +22,8 @@
     <script src="${base}/dest/js/common/common.js"></script>
     <script src="${base}/dest/js/common/common.js"></script>
     <script src="${base}/dest/bootstrap-datapicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="${base}/dest/sweetAlert/js/sweet-alert.js"></script>
+    <link rel="stylesheet" type="text/css" href="${base}/dest/sweetAlert/css/sweet-alert.css">
     <script type="text/javascript">
         $(document).ready(function () {
             $("#myNav").affix({
@@ -40,6 +42,7 @@
         var lendBooksByCodeUrl = "${base}/bookManager/lendBooksByCode";
         var returnBooksByCodeUrl = "${base}/bookManager/returnBooksByCode";
         var sureToModifyUrl = "${base}/bookManager/sureToModify";
+        var registerUrl = "${base}/SignIn/register";
     </script>
     <script src="${base}/dest/js/book-manager.js"></script>
 </head>
@@ -396,7 +399,11 @@
                         <div class="form-group col-sm-6">
                             <label class="col-sm-4 control-label">性&nbsp;别:</label>
                             <div class="col-sm-8">
-                                <input id="register-sex" type="password" class="form-control" placeholder="请输入书籍名称">
+                                <select name="type" id="register-sex" class="search-input-bookinfo">
+                                    <option value="">请选择</option>
+                                    <option value="0">女</option>
+                                    <option value="1">男</option>
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -412,7 +419,7 @@
                         <div class="form-group col-sm-6">
                             <label class="col-sm-4 control-label">班级号:</label>
                             <div class="col-sm-8">
-                                <input id="register-class-id" type="password" class="form-control"
+                                <input id="register-class-id" type="text" class="form-control"
                                        placeholder="请输入书籍名称">
                             </div>
                         </div>
@@ -423,10 +430,10 @@
                         <div class="form-group col-sm-6">
                             <label class="margin-left-minus-fifty col-sm-4 control-label">用户类型:</label>
                             <div class="col-sm-8">
-                                <select name="type" class="search-input-bookinfo">
+                                <select name="type" id="register-user-type" class="search-input-bookinfo">
                                     <option value="">请选择</option>
+                                    <option value="0">管理员</option>
                                     <option value="1">用户</option>
-                                    <option value="2">管理员</option>
                                 </select>
                             </div>
                         </div>
@@ -521,8 +528,6 @@
         </div>
     </div>
 </div>
-
-
 </body>
 </html>
 
