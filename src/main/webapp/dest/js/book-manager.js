@@ -713,10 +713,18 @@ $(function () {
                 }
             }
         })
-
-
     }
 
+    var DownloadFile = function (downloadUrl, flag) {
+        this.downloadUrl = downloadUrl;
+        this.flag = flag;
+    }
+
+    DownloadFile.prototype.download = function () {
+        $("#downLoad").attr("action", this.downloadUrl);
+        $("#download-flag").val(this.flag);
+        $("#downLoad").submit();
+    }
 
     $(window).load(function () {
         var bookInfo = data.bookList;
@@ -828,4 +836,17 @@ $(function () {
             registerIn.register();
         }
     });
+
+    $("#section-8").on("click", function () {
+        new DownloadFile(downloadUrl, 0).download();//书籍下载
+    })
+
+    $("#section-9").on("click", function () {
+        new DownloadFile(downloadUrl, 1).download();//借书情况下载
+    })
+    $("#section-10").on("click", function () {
+        new DownloadFile(downloadUrl, 2).download();//用户情况下载
+    })
+
+
 });

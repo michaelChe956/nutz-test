@@ -43,6 +43,7 @@
         var returnBooksByCodeUrl = "${base}/bookManager/returnBooksByCode";
         var sureToModifyUrl = "${base}/bookManager/sureToModify";
         var registerUrl = "${base}/SignIn/register";
+        var downloadUrl = "${base}/bookManager/download";
     </script>
     <script src="${base}/dest/js/book-manager.js"></script>
 </head>
@@ -68,6 +69,10 @@
                 <li class="lendBook"><a href="#section-5">借书处理</a></li>
                 <li class="returnBook"><a href="#section-6">还书处理</a></li>
                 <li class="returnBook"><a href="#section-7">录入用户或管理员</a></li>
+                <li id="section-8" class="returnBook"><a>导出图书信息</a></li>
+                <li id="section-9" class="returnBook"><a>导出借书信息</a></li>
+                <li id="section-10" class="returnBook"><a>导出用户信息信息</a></li>
+
             </ul>
         </div>
         <div class="col-xs-9">
@@ -519,6 +524,9 @@
         </div>
     </div>
 </div>
+<form id="downLoad" action="" method="post">
+    <input type="hidden" id="download-flag" name="flag"/>
+</form>
 </body>
 </html>
 

@@ -1,5 +1,6 @@
 package com.test.nutzbook.module.bookManager;
 
+import com.google.common.collect.Lists;
 import com.test.nutzbook.bean.Book;
 import com.test.nutzbook.bean.User;
 import com.test.nutzbook.bean.UserBookRelation;
@@ -21,7 +22,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author chejingchi
@@ -145,6 +149,89 @@ public class bookManagerIndexModule extends BaseModule {
         dao.update(student);
         setAllBooksThatULend(student);
         return new NutMap().setv("student", student);
+    }
+
+
+    @At
+    @Ok("raw")
+    public File download(@Param("flag") int flag) {
+        List<Map> retList = new ArrayList<Map>();
+        List<String> columnNames;
+        List<String> columnCodes;
+        if (0 == flag) {
+            List<Book> bookList = dao.query(Book.class, null);
+            columnNames = Lists.newArrayList("图书名字", "图书编码", "作者", "出版社",
+                    "类型", "版本", "价格", "书籍简介", "列", "行");
+            columnCodes = Lists.newArrayList("bookName", "bookCode", "author", "publishingHouse"
+                    , "typeName", "version", "price", "bookBriefIntroduction", "libraryRow", "libraryColumn");
+            for (Book b : bookList) {
+                Map bookMap = new HashMap();
+                bookMap.put("bookCode", b.getBookCode());
+                bookMap.put("bookName", b.getBookName());
+                bookMap.put("author", b.getAuthor());
+                bookMap.put("publishingHouse", b.getPublishingHouse());
+                bookMap.put("typeName", b.getTypeName());
+                bookMap.put("version", b.getVersion());
+                bookMap.put("price", b.getPrice());
+                bookMap.put("bookBriefIntroduction", b.getBookBriefIntroduction());
+                bookMap.put("libraryRow", b.getLibraryRow());
+                bookMap.put("libraryColumn", b.getLibraryColumn());
+                retList.add(bookMap);
+            }
+            export("书籍信息" + new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())
+                    + ".csv", retList, columnNames, columnCodes);
+        } else if (1 == flag) {
+            List<UserBookRelation> userBookRelationList = dao.query(UserBookRelation.class, null);
+            for (UserBookRelation u : userBookRelationList) {
+                Map userBookRelationMap = new HashMap();
+                User user = dao.fetch(User.class, u.getUserId());
+                Book book = dao.fetch(Book.class, u.getBookId());
+                userBookRelationMap.put("userName", u.getUserName());
+                userBookRelationMap.put("libraryCardNo", user.getLibraryCardNo());
+                userBookRelationMap.put("bookCode", book.getBookCode());
+                userBookRelationMap.put("bookName", u.getBookName());
+                userBookRelationMap.put("inUse", u.getInUse() == 0 ? "借阅中" : "已经归还");
+                userBookRelationMap.put("createTime", u.getCreateTime());
+                userBookRelationMap.put("operatorName", u.getOperatorName());
+                retList.add(userBookRelationMap);
+            }
+            columnNames = Lists.newArrayList("借书人姓名", "借书证", "书籍编码", "书籍名称",
+                    "是否被借阅", "操作人员", "创建时间");
+            columnCodes = Lists.newArrayList("userName", "libraryCardNo", "bookCode",
+                    "bookName", "inUse", "operatorName", "createTime");
+            export("借书情况" + new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())
+                    + ".csv", retList, columnNames, columnCodes);
+        } else if (2 == flag) {
+            List<User> userList = dao.query(User.class, null);
+            for (User u : userList) {
+                setAllBooksThatULend(u);
+                Map userMap = new HashMap();
+                userMap.put("name", u.getName());
+                userMap.put("studentId", u.getStudentId());
+                userMap.put("sex", u.getSex() == 0 ? "男" : "女");
+                userMap.put("libraryCardNo", u.getLibraryCardNo());
+                userMap.put("classId", u.getClassId());
+                userMap.put("telephone", u.getTelephone());
+                userMap.put("email", u.getEmail());
+                userMap.put("qq", u.getQq());
+                userMap.put("booksName", u.getBooksName());
+                retList.add(userMap);
+            }
+            columnNames = Lists.newArrayList("姓名", "学号", "性别",
+                    "借书证", "班级号", "电话号码", "邮箱","QQ","借阅书籍");
+            columnCodes = Lists.newArrayList("name", "studentId", "sex",
+                    "libraryCardNo", "classId", "telephone", "email", "qq", "booksName");
+            export("用户信息" + new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())
+                    + ".csv", retList, columnNames, columnCodes);
+        }
+
+        File retFile = new File("");
+        try {
+            retFile = getFile();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return retFile;
     }
 
 
