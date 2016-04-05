@@ -55,7 +55,7 @@
         <h1>图书管理系统</h1>
         <blockquote class="pull-right margin-top-minus-fifth">
             <strong>Books are the ladder of human progress</strong>
-            <small>Books are the ladder of human progress<cite>Gorky</cite></small>
+            <small>Books are the ladder of human progress&nbsp;<cite>Gorky</cite></small>
         </blockquote>
     </div>
     <div class="row">
@@ -218,6 +218,22 @@
                         </div>
                     </form>
                 </div>
+                <div class="row">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group col-sm-6">
+                            <label class="margin-left-minus-fifty col-sm-4 control-label">页数</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="pages" class="form-control" placeholder="录入页数">
+                            </div>
+                        </div>
+                        <div class="margin-left-minus-fifty form-group col-sm-6">
+                            <label class="col-sm-4 control-label">简介</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="bookBriefIntroduction" class="form-control" placeholder="录入简介">
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div align="center">
                     <button type="button" id="apply-in-book" class="btn btn-default">图书入库</button>
                 </div>
@@ -376,14 +392,14 @@
                         <div class="form-group col-sm-6">
                             <label class="margin-left-minus-fifty col-sm-4 control-label">用户名:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="register-username" placeholder="请输入书籍编码">
+                                <input type="text" class="form-control" id="register-username" placeholder="请输入用户名">
                             </div>
                         </div>
                         <div class="form-group col-sm-6">
                             <label class="col-sm-4 control-label">密&nbsp;码:</label>
                             <div class="col-sm-8">
                                 <input id="register-password" type="password" class="form-control"
-                                       placeholder="请输入书籍名称">
+                                       placeholder="请输入密码">
                             </div>
                         </div>
                     </form>
@@ -393,7 +409,7 @@
                         <div class="form-group col-sm-6">
                             <label class="margin-left-minus-fifty col-sm-4 control-label">姓&nbsp;名:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="register-name" placeholder="请输入书籍编码">
+                                <input type="text" class="form-control" id="register-name" placeholder="请输入姓名">
                             </div>
                         </div>
                         <div class="form-group col-sm-6">
@@ -413,14 +429,14 @@
                         <div class="form-group col-sm-6">
                             <label class="margin-left-minus-fifty col-sm-4 control-label">学&nbsp;号:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="register-study-num" placeholder="请输入书籍编码">
+                                <input type="text" class="form-control" id="register-study-num" placeholder="请输入学号">
                             </div>
                         </div>
                         <div class="form-group col-sm-6">
                             <label class="col-sm-4 control-label">班级号:</label>
                             <div class="col-sm-8">
                                 <input id="register-class-id" type="text" class="form-control"
-                                       placeholder="请输入书籍名称">
+                                       placeholder="请输入班级号">
                             </div>
                         </div>
                     </form>
@@ -463,14 +479,6 @@
             </div>
             <div class="modal-body">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-                <button type="button" class="btn btn-primary">
-                    提交更改
-                </button>
-            </div>
         </div>
     </div>
 </div>
@@ -488,14 +496,6 @@
                 </h4>
             </div>
             <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-                <button type="button" class="btn btn-primary">
-                    提交更改
-                </button>
             </div>
         </div>
     </div>
@@ -515,15 +515,6 @@
                 </h4>
             </div>
             <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn close-and-refresh btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-                <button type="button" class="btn btn-primary">
-                    提交更改
-                </button>
             </div>
         </div>
     </div>

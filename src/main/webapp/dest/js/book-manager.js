@@ -312,13 +312,19 @@ $(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                    swal("Good job!","借书成功","success");
+                    swal("Good job!", "借书成功", "success");
                 }
             });
         },
         lendBooksByCode: function ($bookInfo) {
             var bookCode = $("#lend-book-code").val();
             var libraryCardNo = $bookInfo.parent().parent().find("input[name='libraryCardNo']").val();
+            if ($.checkEmpty(bookCode)) {
+                swal("opps...", "请输入书籍编码", "error");
+            }
+            if ($.checkEmpty(libraryCardNo)) {
+                swal("opps...", "请输入图书证号", "error");
+            }
             $.ajax({
                 type: "post",
                 url: lendBooksByCodeUrl,
@@ -329,7 +335,7 @@ $(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                    swal("Good job!","借书成功","success");
+                    swal("Good job!", "借书成功", "success");
                 }
             });
 
@@ -348,7 +354,7 @@ $(function () {
                 dataType: "json",
                 success: function (data) {
                     if (data.flag) {
-                        sweetAlert("Good job!","还书成功","success");
+                        sweetAlert("Good job!", "还书成功", "success");
                     }
                 }
             });
@@ -356,6 +362,12 @@ $(function () {
         returnBooksByCode: function ($bookInfo) {
             var bookCode = $("#return-book-code").val();
             var libraryCardNo = $bookInfo.parent().parent().find("input[name='libraryCardNo']").val();
+            if ($.checkEmpty(bookCode)) {
+                swal("opps...", "请输入书籍编码", "error");
+            }
+            if ($.checkEmpty(libraryCardNo)) {
+                swal("opps...", "请输入图书证号", "error");
+            }
             $.ajax({
                 type: "post",
                 url: returnBooksByCodeUrl,
@@ -366,7 +378,7 @@ $(function () {
                 dataType: "json",
                 success: function (data) {
                     if (data.flag) {
-                        sweetAlert("Good job!","还书成功","success");
+                        sweetAlert("Good job!", "还书成功", "success");
                     }
                 }
             });
@@ -446,7 +458,7 @@ $(function () {
     var Book = function (bookCode, bookName, type,
                          price, author, publishingHouse,
                          num, version, applyInStaff,
-                         libraryRow, libraryColumn) {
+                         libraryRow, libraryColumn, pages, bookBriefIntroduction) {
         this.bookCode = bookCode;
         this.bookName = bookName;
         this.type = type;
@@ -458,6 +470,55 @@ $(function () {
         this.applyInStaff = applyInStaff;
         this.libraryRow = libraryRow;
         this.libraryColumn = libraryColumn;
+        this.pages = pages;
+        this.bookBriefIntroduction = bookBriefIntroduction;
+    }
+
+    Book.prototype.checkIsNotEmpty = function () {
+        if ($.checkEmpty(this.bookCode)) {
+            sweetAlert("Oops...", "书籍编码不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.bookName)) {
+            sweetAlert("Oops...", "书籍名称不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.price)) {
+            sweetAlert("Oops...", "书籍价格不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.author)) {
+            sweetAlert("Oops...", "作者不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.publishingHouse)) {
+            sweetAlert("Oops...", "出版社不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.num)) {
+            sweetAlert("Oops...", "录入数量不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.version)) {
+            sweetAlert("Oops...", "版本不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.applyInStaff)) {
+            sweetAlert("Oops...", "录入操作员不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.libraryRow)) {
+            sweetAlert("Oops...", "排数不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.libraryColumn)) {
+            sweetAlert("Oops...", "列数不能为空", "error");
+            return false;
+        }
+        if ($.checkEmpty(this.bookBriefIntroduction)) {
+            sweetAlert("Oops...", "简介不能为空", "error");
+        }
+        return true;
     }
 
     Book.prototype.applyInStore = function () {
@@ -472,7 +533,9 @@ $(function () {
             version: this.version,
             applyInStaff: this.applyInStaff,
             libraryRow: this.libraryRow,
-            libraryColumn: this.libraryColumn
+            libraryColumn: this.libraryColumn,
+            pages: this.pages,
+            bookBriefIntroduction: this.bookBriefIntroduction
         }
         $.ajax({
             url: bookApplyInStoreUrl,
@@ -481,7 +544,7 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 if (data) {
-                    sweetAlert("Good job!","插入成功","success");
+                    sweetAlert("Good job!", "插入成功", "success");
                 }
             }
         })
@@ -497,29 +560,29 @@ $(function () {
     UserLink.prototype.checkIsNotEmpty = function () {
         var mailRegularity = /\w@\w*\.\w/;
         if ($.checkEmpty(this.telephone)) {
-            sweetAlert("Oops...","电话号码不能为空","error");
+            sweetAlert("Oops...", "电话号码不能为空", "error");
             return false;
         } else if (this.telephone.length != 11) {
-            sweetAlert("Oops...","电话号码格式不正确","error");
+            sweetAlert("Oops...", "电话号码格式不正确", "error");
             return false;
         }
         if ($.checkEmpty(this.anotherTphone)) {
-            sweetAlert("Oops...","第二联系号码不能为空","error");
+            sweetAlert("Oops...", "第二联系号码不能为空", "error");
             return false;
         }
         else if (this.anotherTphone.length != 11) {
-            sweetAlert("Oops...","电话号码格式格式","error");
+            sweetAlert("Oops...", "电话号码格式格式", "error");
             return false;
         }
         if ($.checkEmpty(this.qq)) {
-            sweetAlert("Oops...","qq号码不能为空","error");
+            sweetAlert("Oops...", "qq号码不能为空", "error");
             return false;
         }
         if ($.checkEmpty(this.email)) {
-            sweetAlert("Oops...","邮箱号码不能为空","error");
+            sweetAlert("Oops...", "邮箱号码不能为空", "error");
             return false;
         } else if (!mailRegularity.test(this.email)) {
-            sweetAlert("Oops...","邮箱格式不对","error");
+            sweetAlert("Oops...", "邮箱格式不对", "error");
             return false;
         }
         return true;
@@ -580,48 +643,48 @@ $(function () {
 
     RegisterUser.prototype.checkIsNotEmpty = function () {
         if ($.checkEmpty(this.userType)) {
-            sweetAlert("Oops...","请选择用户类型","error");
+            sweetAlert("Oops...", "请选择用户类型", "error");
             return false;
         }
         if (this.userType == 0) {
             if ($.checkEmpty(this.username)) {
-                sweetAlert("Oops...","用户名不能为空","error");
+                sweetAlert("Oops...", "用户名不能为空", "error");
                 return false;
             }
             if ($.checkEmpty(this.password)) {
-                sweetAlert("Oops...","密码不能为空","error");
+                sweetAlert("Oops...", "密码不能为空", "error");
                 return false;
             }
             if ($.checkEmpty(this.name)) {
-                sweetAlert("Oops...","姓名不能为空","error");
+                sweetAlert("Oops...", "姓名不能为空", "error");
                 return false;
             }
         } else if (this.userType == 1) {
             if ($.checkEmpty(this.username)) {
-                sweetAlert("Oops...","用户名不能为空","error");
+                sweetAlert("Oops...", "用户名不能为空", "error");
                 return false;
             }
             if ($.checkEmpty(this.password)) {
-                sweetAlert("Oops...","密码不能为空","error");
+                sweetAlert("Oops...", "密码不能为空", "error");
                 return false;
             } else if (this.password.length < 6) {
-                sweetAlert("Oops...","密码最少6位","error");
+                sweetAlert("Oops...", "密码最少6位", "error");
                 return false;
             }
             if ($.checkEmpty(this.name)) {
-                sweetAlert("Oops...","姓名不能为空","error");
+                sweetAlert("Oops...", "姓名不能为空", "error");
                 return false;
             }
             if ($.checkEmpty(this.sex)) {
-                sweetAlert("Oops...","请选择性别","error");
+                sweetAlert("Oops...", "请选择性别", "error");
                 return false;
             }
             if ($.checkEmpty(this.studyNum)) {
-                sweetAlert("Oops...","学号不能为空","error");
+                sweetAlert("Oops...", "学号不能为空", "error");
                 return false;
             }
             if ($.checkEmpty(this.classId)) {
-                sweetAlert("Oops...","班级号不能为空","error");
+                sweetAlert("Oops...", "班级号不能为空", "error");
                 return false;
             }
         }
@@ -646,7 +709,7 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 if (data.flag) {
-                    sweetAlert("Oops...","录入成功","success");
+                    sweetAlert("Oops...", "录入成功", "success");
                 }
             }
         })
@@ -693,12 +756,16 @@ $(function () {
         var applyInStaff = $("#applyInStaff").val();
         var libraryRow = $("#libraryRow").val();
         var libraryColumn = $("#libraryColumn").val();
+        var bookBriefIntroduction = $("#bookBriefIntroduction").val();
+        var page = $("#page").val();
         var book = new Book(bookCode, bookName, type,
             price, author, publishingHouse,
             num, version, applyInStaff,
-            libraryRow, libraryColumn);
-        book.applyInStore();
-        BookManager.closeAndRefresh();
+            libraryRow, libraryColumn, page, bookBriefIntroduction);
+        if (book.checkIsNotEmpty()) {
+            book.applyInStore();
+            BookManager.closeAndRefresh();
+        }
     })
 
 
@@ -752,7 +819,6 @@ $(function () {
             pickerPosition: "bottom-left"
         });
     })
-
 
     $("#sign-up-user-admin").on("click", function () {
         var registerIn = new RegisterUser($("#register-username").val(), $("#register-password").val(),
