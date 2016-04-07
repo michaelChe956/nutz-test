@@ -208,7 +208,7 @@ public class bookManagerIndexModule extends BaseModule {
                 Map userMap = new HashMap();
                 userMap.put("name", u.getName());
                 userMap.put("studentId", u.getStudentId());
-                userMap.put("sex", u.getSex() == 0 ? "男" : "女");
+                userMap.put("sex", u.getSex() == 0 ? "女" : "男");
                 userMap.put("libraryCardNo", u.getLibraryCardNo());
                 userMap.put("classId", u.getClassId());
                 userMap.put("telephone", u.getTelephone());

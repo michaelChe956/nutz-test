@@ -128,13 +128,13 @@ $(function () {
                 '</td> </tr> <tr> <td rowspan="2"  class="info-brief">图书简介:</td> ' +
                 '<td rowspan="2" colspan="3">' + data.bookList[bookId].bookBriefIntroduction +
                 '</td> <tr></tr><tr> <td>数量:</td> <td>' + data.bookList[bookId].num +
-                '</td> <td class="text-success">可借阅</td> ';
+                '</td>';
             if (0 == data.bookList[bookId].canLend) {
                 bookDetailInfo +=
-                    '<td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px">借阅</button> </td>'
+                    ' <td class="text-success">可借阅</td> <td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px">借阅</button> </td>'
             } else {
                 bookDetailInfo +=
-                    '<td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px" disabled>借阅</button> </td>'
+                    ' <td class="text-warning">不可借阅</td> <td><button class="lend-the-book btn btn-large btn-primary" type="button" style="width: 74px" disabled>借阅</button> </td>'
             }
             bookDetailInfo += '</tr> </tr> </tbody> </table>';
             $("#book-detail-info").find(".modal-body").html(bookDetailInfo);

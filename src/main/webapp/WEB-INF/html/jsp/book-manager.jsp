@@ -314,22 +314,6 @@
                         </div>
                     </form>
                 </div>
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入操作员">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">录入时间</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control pick-time" placeholder="" readonly>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <div align="center">
                     <button type="button" id="lend-books-by-code" class="btn btn-default">图书借出</button>
                 </div>
@@ -369,22 +353,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="row">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group col-sm-6">
-                            <label class="margin-left-minus-fifty col-sm-4 control-label">录入操作员</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="录入操作员">
-                            </div>
-                        </div>
-                        <div class="margin-left-minus-fifty form-group col-sm-6">
-                            <label class="col-sm-4 control-label">录入时间</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control pick-time" placeholder="" readonly>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+
                 <div align="center">
                     <button type="button" id="return-books-by-code" class="btn btn-default">图书归还</button>
                 </div>
