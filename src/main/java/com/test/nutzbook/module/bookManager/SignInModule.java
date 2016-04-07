@@ -62,6 +62,7 @@ public class SignInModule extends BaseModule {
     public Object register(@Param("..") User user){
         LibraryCardNoSequence libraryCardNoSequence = dao.fetch(LibraryCardNoSequence.class,"libraryCardNo");
         user.setLibraryCardNo(libraryCardNoSequence.getCurrentVal());
+        user.setStudyState(1);
         dao.insert(user);
         return new NutMap().setv("flag",true);
     }
