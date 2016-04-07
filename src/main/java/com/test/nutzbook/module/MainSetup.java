@@ -1,7 +1,10 @@
 package com.test.nutzbook.module;
 
 
+import com.test.nutzbook.bean.Book;
+import com.test.nutzbook.bean.LibraryCardNoSequence;
 import com.test.nutzbook.bean.User;
+import com.test.nutzbook.bean.UserBookRelation;
 import org.nutz.dao.Dao;
 import org.nutz.dao.util.Daos;
 import org.nutz.ioc.Ioc;
@@ -24,6 +27,11 @@ public class MainSetup implements Setup {
         Ioc ioc = nutConfig.getIoc();
         Dao dao = ioc.get(Dao.class);
         Daos.createTablesInPackage(dao, "com.test.nutzbook", false);
+        //创建表格 false指有就不创建..没有才创建
+        dao.create(Book.class, false);
+        dao.create(LibraryCardNoSequence.class, false);
+        dao.create(User.class, false);
+        dao.create(UserBookRelation.class, false);
         //初始化默认根用户
         if (dao.count(User.class) == 0) {
             User user = new User();
