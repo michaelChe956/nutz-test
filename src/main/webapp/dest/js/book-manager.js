@@ -124,7 +124,7 @@ $(function () {
                 '</td> </tr> <tr> <td>页数:</td> <td>' + data.bookList[bookId].pages +
                 '</td> <td>版本:</td> <td>' + data.bookList[bookId].version +
                 '</td> </tr> <tr> <td>出版社:</td> <td>' + data.bookList[bookId].publishingHouse +
-                '</td> <td>类型:</td> <td>' + data.bookList[bookId].type +
+                '</td> <td>类型:</td> <td>' + data.bookList[bookId].typeName +
                 '</td> </tr> <tr> <td rowspan="2"  class="info-brief">图书简介:</td> ' +
                 '<td rowspan="2" colspan="3">' + data.bookList[bookId].bookBriefIntroduction +
                 '</td> <tr></tr><tr> <td>数量:</td> <td>' + data.bookList[bookId].num +

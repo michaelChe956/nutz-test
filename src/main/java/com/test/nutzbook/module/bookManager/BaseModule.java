@@ -39,7 +39,7 @@ public class BaseModule {
     public List<Book> getBookList() {
         List<Book> bookList = dao.query(Book.class, null);
         for (Book book : bookList) {
-            book.setTypeName(BookType.useBookType(book.getType()));
+            book.setTypeName(BookType.useBookType(book.getType() - 1));
         }
         return bookList;
     }
@@ -155,7 +155,7 @@ public class BaseModule {
     }
 
     public File getFile() throws UnsupportedEncodingException {
-        return byte2File(gernateCSVFile().toString().getBytes("GBK"),fileName);
+        return byte2File(gernateCSVFile().toString().getBytes("GBK"), fileName);
     }
 
 
