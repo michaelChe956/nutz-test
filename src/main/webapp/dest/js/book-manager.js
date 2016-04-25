@@ -87,7 +87,7 @@ $(function () {
                 return;
             }
             student.sex = student.sex == 0 ? '女' : '男';
-            student.studyState = student.sex == 0 ? '在读' : '离校';
+            student.studyState = student.studyState == 0 ? '在读' : '离校';
             var userInfo = '<table class="table table-bordered"><caption></caption><thead></thead><tbody><tr>' +
                 '<input id="user-id" type="hidden" value="' + student.id + '" />' +
                 '<td class="first-col">姓名</td> <td class="second-col">' + student.name +

@@ -66,7 +66,7 @@ public class SignInModule extends BaseModule {
         dao.execute(sql);
         LibraryCardNoSequence libraryCardNoSequence = dao.fetch(LibraryCardNoSequence.class);
         user.setLibraryCardNo(libraryCardNoSequence.getCurrentVal());
-        user.setStudyState(1);
+        user.setStudyState(0);
         dao.insert(user);
         return new NutMap().setv("flag",true);
     }
