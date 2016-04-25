@@ -4,6 +4,8 @@ import com.test.nutzbook.bean.Book;
 import com.test.nutzbook.bean.LibraryCardNoSequence;
 import com.test.nutzbook.bean.User;
 import org.nutz.dao.Cnd;
+import org.nutz.dao.Sqls;
+import org.nutz.dao.sql.Sql;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
 import org.nutz.lang.util.NutMap;
@@ -60,7 +62,9 @@ public class SignInModule extends BaseModule {
 
     @At
     public Object register(@Param("..") User user){
-        LibraryCardNoSequence libraryCardNoSequence = dao.fetch(LibraryCardNoSequence.class,"libraryCardNo");
+        Sql sql = Sqls.create("select _nextval('libraryCardNo')");
+        dao.execute(sql);
+        LibraryCardNoSequence libraryCardNoSequence = dao.fetch(LibraryCardNoSequence.class);
         user.setLibraryCardNo(libraryCardNoSequence.getCurrentVal());
         user.setStudyState(1);
         dao.insert(user);

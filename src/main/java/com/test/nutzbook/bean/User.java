@@ -63,7 +63,7 @@ public class User {
     private String qq;
 
     public String getQq() {
-        return qq;
+        return qq == null ? "": qq;
     }
 
     public void setQq(String qq) {
@@ -187,7 +187,7 @@ public class User {
     }
 
     public String getTelephone() {
-        return telephone;
+        return telephone == null ? "" : telephone;
     }
 
     public void setTelephone(String telephone) {
@@ -195,7 +195,7 @@ public class User {
     }
 
     public String getAnotherTphone() {
-        return anotherTphone;
+        return anotherTphone == null ? "" : anotherTphone;
     }
 
     public void setAnotherTphone(String anotherTphone) {
@@ -203,7 +203,7 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return email == null ? "" : email;
     }
 
     public void setEmail(String email) {
